@@ -1,0 +1,23 @@
+ion-slide {
+  padding: 50% 2px;
+  display: block;
+  .logo {
+    width: 140px;
+    height: 180px;
+  }
+}
+
+ion-spinner {
+  margin-top: 30px;
+}
+
+.splash {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}

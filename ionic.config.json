@@ -1,0 +1,7 @@
+{
+  "name": "Jasttips",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

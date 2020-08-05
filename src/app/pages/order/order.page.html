@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Kirim Barang</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating">Nama</ion-label>
+        <ion-input [(ngModel)]="formOrder.name_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating">Nomor HP (prioritas WhatsApp)</ion-label>
+        <ion-input [(ngModel)]="formOrder.phone_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating">Alamat</ion-label>
+        <ion-input [(ngModel)]="formOrder.address_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating">Menu / Barang</ion-label>
+        <ion-input [(ngModel)]="formOrder.product_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating">Outlet</ion-label>
+        <ion-input [(ngModel)]="formOrder.outlet_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-list class="ion-padding">
+    <ion-button (click)="submitOrder()" expand="block" color="primary">
+      Order
+    </ion-button>
+  </ion-list>
+</ion-footer>

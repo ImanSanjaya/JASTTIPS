@@ -1,0 +1,81 @@
+<ion-content>
+  <div class="header-info">
+    <img src="assets/banner/icon-tugu-padi.jpeg" alt="" />
+    <div class="ion-text-center ion-padding">
+      <ion-text color="light" class="mt">
+        Aplikasi Pemesanan <br />
+        Makanan & Jasa Kurir <br />
+        Kota Karawang
+      </ion-text>
+    </div>
+  </div>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4">
+        <ion-button [routerLink]="['/list-product']" routerDirection="forward" expand="block" color="light">
+          <ion-row>
+            <ion-col size="12">
+              <img src="assets/icon/icon-food.png" class="icon-pesan-makanan" alt="" />
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Pesan <br />
+                Makanan
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button [routerLink]="['/order']" expand="block" color="light">
+          <ion-row>
+            <ion-col size="12">
+              <img src="assets/icon/icon-kurir.png" class="icon-kurir" alt="" />
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Kirim <br />
+                Barang
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button [routerLink]="['/list-product']" expand="block" color="light">
+          <ion-row>
+            <ion-col size="12">
+              <img src="assets/icon/icon-printing.png" class="icon-percetakan" alt="" />
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Percetakan
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <section class="full-width">
+    <div class="promo-banner">
+      <label class="label-promo-banner">
+        Lihat Promo Hari Ini
+      </label>
+    </div>
+  </section>
+  <ion-slides pager="true" scroll-y="false" [options]="slideOptsOne">
+    <ion-slide *ngFor="let item of [].constructor(3)">
+      <img src="assets/img/img-percetakan.jpeg" alt="" />
+    </ion-slide>
+  </ion-slides>
+  <div class="promo-banner-bottom"></div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="ion-no-padding" style="margin-top: -20px;">
+    <img style="margin-bottom: -5px;" src="assets/banner/output-onlinepngtools.png" alt="" />
+    <div class="footer"></div>
+  </ion-toolbar>
+</ion-footer>

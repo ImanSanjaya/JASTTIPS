@@ -3,9 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiSendMessageWA: 'https://api.whatsapp.com',
+  interceptorDebug: true
 };
 
+//https://api.whatsapp.com/send?phone=6287788648957&text=Saya%0Atertarik%0Auntuk%0Aberlangganan%0AKIRIM.EMAIL
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

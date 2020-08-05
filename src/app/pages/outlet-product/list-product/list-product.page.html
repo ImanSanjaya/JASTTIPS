@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Outlet Makanan</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar placeholder="Cari outlet makanan ..."></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card [routerLink]="['/detail-product']">
+    <img src="assets/img/img-outlet-gurame.jpeg" class="img-outlet" alt="">
+    <ion-card-header>
+      <ion-card-title>Gurame</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Jl.Poponcol
+    </ion-card-content>
+  </ion-card>
+</ion-content>

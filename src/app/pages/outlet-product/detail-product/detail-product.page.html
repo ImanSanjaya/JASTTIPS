@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Outlet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="assets/img/img-outlet-gurame.jpeg" class="img-outlet" alt="" />
+
+  <!-- Toolbar Segment -->
+  <ion-item-divider sticky class="ion-no-padding">
+    <ion-toolbar>
+      <ion-segment [(ngModel)]="menuSegment" value="rekomendasi">
+        <ion-segment-button value="rekomendasi">Rekomendasi</ion-segment-button>
+        <ion-segment-button value="menuLengkap">Menu Lengkap</ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-item-divider>
+  <!-- End Toolbar Segment -->
+
+  <!-- Segment -->
+  <div [ngSwitch]="menuSegment">
+    <!-- Segment Rekomendasi -->
+    <div *ngSwitchCase="'rekomendasi'">
+      <ion-card *ngFor="let item of [].constructor(20)">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="4">
+              <img src="assets/img/img-makanan-gurame.jpg" class="img-pesan-makanan" alt="" />
+            </ion-col>
+            <ion-col size="8">
+              <ion-grid fixed class="isi-content">
+                <ion-text color="dark">
+                  <div class="title" style="margin-left: 10px; margin-bottom: 8px;">
+                    {{namaMakanan}}
+                  </div>
+                </ion-text>
+                <ion-text color="medium">
+                  <div class="content" style="margin-left: 10px; margin-bottom: 8px;">
+                    {{harga | currency:'Rp. ':true:'1.0'}}
+                  </div>
+                </ion-text>
+
+                <!-- Plus Minus -->
+                <ion-row>
+                  <ion-col size="2">
+                    <ion-button (click)="onClick(decrement())" color="medium" class="ion-button-plus-minus">
+                      <b>-</b>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="3">
+                    <div class="jml-pesan">{{currentNumber}}</div>
+                  </ion-col>
+                  <ion-col size="">
+                    <ion-button (click)="onClick(increment())" color="primary" class="ion-button-plus-minus">
+                      <b>+</b>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <!-- End Plus Minus -->
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+    <!-- End Segment Rekomendasi -->
+
+    <!-- Segment Menu Lengkap -->
+    <div *ngSwitchCase="'menuLengkap'">
+      <ion-row>
+        <ion-col size="6" *ngFor="let item of [].constructor(20)">
+          <ion-card>
+            <ion-card-content>
+              <ion-text color="dark">
+                <div class="title">
+                  Gurame Goreng
+                </div>
+              </ion-text>
+              <ion-text color="medium">
+                <div class="content">
+                  Rp. 35,000
+                </div>
+              </ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+    <!-- End Segment Menu Lengkap -->
+  </div>
+  <!-- End Segment -->
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col size="6">
+      <h4 class="total">Total</h4>
+    </ion-col>
+    <ion-col size="6">
+      <ion-text color="primary">
+        <h4 class="sub-total" color="primary">
+          {{subTotal | currency:'Rp. ':true:'1.0'}}
+        </h4>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-toolbar>
+    <ion-button [routerLink]="['/delivery-order']" expand="block" color="primary" class="pesan-makanan">
+      Pesan
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -5,7 +5,7 @@ Built with [Ionicframework](https://ionicframework.com/) and [Angular](https://a
 
 #### Clone the project:
 ```bash
-$ git clone git clone https://gitlab.com/sitektif/jasttips-project.git
+$ git clone git clone https://github.com/solusiteknologieksekutif/jasttips-project.git
 ```
 
 #### Starting Development:

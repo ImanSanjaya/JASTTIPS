@@ -5,34 +5,52 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    loadChildren: () =>
+      import('./pages/dashboard/dashboard.module').then(
+        (m) => m.DashboardPageModule
+      ),
   },
   {
-    path: 'list-product',
-    loadChildren: () => import('./pages/outlet-product/list-product/list-product.module').then( m => m.ListProductPageModule)
+    path: 'list-product/2',
+    loadChildren: () =>
+      import('./pages/order/order.module').then((m) => m.OrderPageModule),
+  },
+  {
+    path: 'list-product/:productId',
+    loadChildren: () =>
+      import('./pages/outlet-product/list-product/list-product.module').then(
+        (m) => m.ListProductPageModule
+      ),
   },
   {
     path: 'order',
-    loadChildren: () => import('./pages/order/order.module').then( m => m.OrderPageModule)
+    loadChildren: () =>
+      import('./pages/order/order.module').then((m) => m.OrderPageModule),
   },
   {
     path: 'detail-product',
-    loadChildren: () => import('./pages/outlet-product/detail-product/detail-product.module').then( m => m.DetailProductPageModule)
+    loadChildren: () =>
+      import(
+        './pages/outlet-product/detail-product/detail-product.module'
+      ).then((m) => m.DetailProductPageModule),
   },
   {
     path: 'delivery-order',
-    loadChildren: () => import('./pages/outlet-product/delivery-order/delivery-order.module').then( m => m.DeliveryOrderPageModule)
+    loadChildren: () =>
+      import(
+        './pages/outlet-product/delivery-order/delivery-order.module'
+      ).then((m) => m.DeliveryOrderPageModule),
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

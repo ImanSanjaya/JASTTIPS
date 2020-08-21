@@ -1,15 +1,3 @@
-ion-grid {
-  margin-top: 10px;
-}
-
-ion-button {
-  width: 100%;
-  height: 100px;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
 .header-info {
   border-radius: 0px 0px 30px 30px;
   font-size: 23px;
@@ -21,25 +9,21 @@ ion-button {
   margin-top: 100px;
 }
 
-.ion-toolbar-header {
-  border-radius: 0px 0px 30px 30px;
-  font-size: 23px;
+ion-grid {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.icon-kurir {
-  width: 50px;
-  height: 50px;
+.dashboard-img {
+  width: 100px;
+  height: 60px;
+  align-items: center;
 }
 
-.icon-percetakan {
-  width: 50px;
-  height: 50px;
-  margin-top: -10px;
-}
-
-.icon-pesan-makanan {
-  width: 70px;
-  height: 50px;
+h3 {
+  color: var(--ion-color-primary);
+  font-weight: bold;
+  margin: 5px;
 }
 
 .promo-banner {

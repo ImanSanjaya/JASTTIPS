@@ -9,51 +9,20 @@
       </ion-text>
     </div>
   </div>
+  
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="4">
-        <ion-button [routerLink]="['/list-product']" routerDirection="forward" expand="block" color="light">
-          <ion-row>
-            <ion-col size="12">
-              <img src="assets/icon/icon-food.png" class="icon-pesan-makanan" alt="" />
-            </ion-col>
-            <ion-col size="12">
-              <ion-text color="primary">
-                Pesan <br />
-                Makanan
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-button>
-      </ion-col>
-      <ion-col size="4">
-        <ion-button [routerLink]="['/order']" expand="block" color="light">
-          <ion-row>
-            <ion-col size="12">
-              <img src="assets/icon/icon-kurir.png" class="icon-kurir" alt="" />
-            </ion-col>
-            <ion-col size="12">
-              <ion-text color="primary">
-                Kirim <br />
-                Barang
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-button>
-      </ion-col>
-      <ion-col size="4">
-        <ion-button [routerLink]="['/list-product']" expand="block" color="light">
-          <ion-row>
-            <ion-col size="12">
-              <img src="assets/icon/icon-printing.png" class="icon-percetakan" alt="" />
-            </ion-col>
-            <ion-col size="12">
-              <ion-text color="primary">
-                Percetakan
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-button>
+      <ion-col class="ion-no-padding" size="4" *ngFor="let dashboard of dashboardData">
+        <ion-card routerLink="/list-product/{{dashboard.id}}" routerLinkActive="router-link-active">
+          <ion-card-header>
+            <img [src]="dashboard.icon" class="dashboard-img" alt="" />
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding">
+            <h3 class="ion-text-center">
+              {{ dashboard.categoryName }}
+            </h3>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -67,7 +36,7 @@
   </section>
   <ion-slides pager="true" scroll-y="false" [options]="slideOptsOne">
     <ion-slide *ngFor="let item of [].constructor(3)">
-      <img src="assets/img/img-percetakan.jpeg" alt="" />
+      <img src="assets/img/product/img-percetakan.jpeg" alt="" />
     </ion-slide>
   </ion-slides>
   <div class="promo-banner-bottom"></div>

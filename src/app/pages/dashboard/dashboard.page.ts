@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { DashboardService } from '../../api/dashboard/dashboard.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-  constructor(private router: Router) {}
+  dashboardData: any;
+
+  constructor(public dashboardService: DashboardService) {}
 
   ngOnInit() {}
 
@@ -17,15 +21,9 @@ export class DashboardPage implements OnInit {
     autoplay: true,
   };
 
-  outletMakanan() {
-    this.router.navigateByUrl('/list-product');
-  }
-
-  pesanBarang() {
-    this.router.navigateByUrl('/order');
-  }
-
-  outletPercetakan() {
-    this.router.navigateByUrl('/list-product');
+  ionViewDidEnter() {
+    this.dashboardService.getDashboard().subscribe((dashboard: any[]) => {
+      this.dashboardData = dashboard;
+    });
   }
 }

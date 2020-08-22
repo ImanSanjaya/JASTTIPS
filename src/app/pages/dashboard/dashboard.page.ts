@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { DashboardService } from '../../api/dashboard/dashboard.service';
+import { ListProductService } from '../../api/product/list-product/list-product.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,20 +10,36 @@ import { DashboardService } from '../../api/dashboard/dashboard.service';
 })
 export class DashboardPage implements OnInit {
   dashboardData: any;
+  listProduct: any;
 
-  constructor(public dashboardService: DashboardService) {}
+  constructor(
+    public dashboardService: DashboardService,
+    public listProductService: ListProductService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getListProduct();
+  }
 
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 1,
     autoplay: true,
+    speed: 300
   };
 
   ionViewDidEnter() {
     this.dashboardService.getDashboard().subscribe((dashboard: any[]) => {
       this.dashboardData = dashboard;
+    });
+  }
+
+  getListProduct() {
+    this.listProductService.productListData().subscribe((data: any) => {
+      this.listProduct = data.foodOutlet;
+
+      console.log(this.listProduct);
+      
     });
   }
 }

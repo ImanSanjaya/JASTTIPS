@@ -21,30 +21,38 @@ ion-grid {
 }
 
 h3 {
-  color: var(--ion-color-primary);
+  color: var(--ion-color-dark);
   font-weight: bold;
   margin: 5px;
 }
 
-.promo-banner {
-  background-color:#33cc33; 
-  text-align: center;
-  height: 24px;
-  border-radius: 5px 5px 0px 0px;
-}
-
-.label-promo-banner {
-  font-size: 15px;
+.category {
+  font-size: 18px;
   font-weight: bold;
-  color: white;
+  margin-left: 5px;
+  margin-bottom: -5px;
 }
 
-.promo-banner-bottom {
-  background-color:#33cc33; 
+.promo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-promo {
+  border-radius: 20px;
+}
+
+ion-slides {
   text-align: center;
-  height: 24px;
-  border-radius: 0px 0px 5px 5px ;
-  margin-bottom: 20px;
+  --bullet-background: var(--ion-color-light);
+  --bullet-background-active: var(--ion-color-light);
+}
+
+ion-slides img {
+  width: 100%;
+  height: auto;
+  // margin-top: 25px;
+  margin-bottom: 30px;
 }
 
 ion-toolbar {

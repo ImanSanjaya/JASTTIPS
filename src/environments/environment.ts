@@ -3,10 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiSendMessageWA: 'https://api.whatsapp.com',
-  interceptorDebug: true
-};
+         production: false,
+         apiSendMessageWA: 'https://api.whatsapp.com',
+         apiJasttips:
+           'https://sitektif.com/RestFulJasttips/index.php/customer/',
+         interceptorDebug: true,
+       };
 
 //https://api.whatsapp.com/send?phone=6287788648957&text=Saya%0Atertarik%0Auntuk%0Aberlangganan%0AKIRIM.EMAIL
 /*

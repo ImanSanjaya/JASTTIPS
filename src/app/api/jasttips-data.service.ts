@@ -53,7 +53,11 @@ export class JasttipsDataService {
     return this.http.get<any>(environment.apiJasttips + 'GetListCategory', {});
   }
 
-  public getListFoodOutlet() {
-    return this.http.get<any>(environment.apiJasttips + 'GetListOutlet/1', {});
+  public getListOutlet(id: any) {
+    return this.http.get<any>(environment.apiJasttips + 'GetListOutlet/' + id, {});
+  }
+
+  public getListItem(detail: string) {
+    return this.http.get<any>(environment.apiJasttips + 'GetListItem/' + detail, {});
   }
 }

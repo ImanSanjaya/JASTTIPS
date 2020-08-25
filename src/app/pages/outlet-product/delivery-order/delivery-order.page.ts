@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceJasttipsService } from 'src/app/api/service-jasttips.service';
+import { JasttipsDataService } from 'src/app/api/jasttips-data.service';
 
 @Component({
   selector: 'app-delivery-order',
@@ -7,7 +7,7 @@ import { ServiceJasttipsService } from 'src/app/api/service-jasttips.service';
   styleUrls: ['./delivery-order.page.scss'],
 })
 export class DeliveryOrderPage implements OnInit {
-  constructor(private serviceJasttipsService: ServiceJasttipsService) {}
+  constructor(private jasttipsDataService: JasttipsDataService) {}
 
   ngOnInit() {}
 
@@ -19,7 +19,7 @@ export class DeliveryOrderPage implements OnInit {
 
   submitDeliveryOrder() {
     open(
-      this.serviceJasttipsService.sendMessageForDeliveryOrder(
+      this.jasttipsDataService.sendMessageForDeliveryOrder(
         '6287879571222',
         this.formDeliveryOrder
       )

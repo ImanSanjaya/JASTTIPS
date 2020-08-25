@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ServiceJasttipsService {
+export class JasttipsDataService {
   constructor(private http: HttpClient) {}
 
   public sendMessageForOrder(phone_admin: string, formOrder) {
@@ -47,5 +47,13 @@ export class ServiceJasttipsService {
       '*Alamat*%20*:*%20' +
       formDeliveriOrder.address_customer
     );
+  }
+
+  public getListCategory() {
+    return this.http.get<any>(environment.apiJasttips + 'GetListCategory', {});
+  }
+
+  public getListFoodOutlet() {
+    return this.http.get<any>(environment.apiJasttips + 'GetListOutlet/1', {});
   }
 }

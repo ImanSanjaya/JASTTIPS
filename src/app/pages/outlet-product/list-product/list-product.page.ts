@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ListProductService } from '../../../api/product/list-product/list-product.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { JasttipsDataService } from '../../../api/jasttips-data.service';
 
 @Component({
   selector: 'app-list-product',
@@ -12,53 +12,40 @@ export class ListProductPage implements OnInit {
   listProductID: any;
   listProduct: any;
 
-  food = 1;
+  outletName: any;
 
   constructor(
-    private listProductService: ListProductService,
+    private jasttipsDataService: JasttipsDataService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.getDetailData();
-    this.getListProduct();
+    this.getData();
   }
 
-  getDetailData() {
-    this.listProductService.dashboardData().subscribe((data: any) => {
+  getData() {
+    this.jasttipsDataService.getListCategory().subscribe((rest) => {
       const productId = this.route.snapshot.paramMap.get('productId');
-      if (data && data.dashboard) {
-        for (const listProduct of data.dashboard) {
-          if (listProduct && listProduct.id === productId) {
+
+      if (rest && rest.category) {
+        for (const listProduct of rest.category) {
+          if (listProduct && listProduct.id_category_outlet === productId) {
             this.listProductID = listProduct;
 
-            if (listProduct.id == 1) {
-              this.listProductService
-                .productListData()
-                .subscribe((data: any) => {
-                  this.listProduct = data.foodOutlet;
-                  console.log(this.listProduct);
+            if (listProduct.id_category_outlet == 1) {
+              this.jasttipsDataService
+                .getListFoodOutlet()
+                .subscribe((rest: any) => {
+                  this.outletName = 'Makanan';
+                  this.listProduct = rest.outlet;
                 });
-            } else if (listProduct.id == 3) {
-              this.listProductService
-                .productListData()
-                .subscribe((data: any) => {
-                  this.listProduct = data.printingOutlet;
-                  console.log(this.listProduct);
-                });
+            } else if (listProduct.id_category_outlet == 2) {
+              this.outletName = 'Percetakan';
             }
-
-            break;
           }
         }
       }
     });
   }
-
-  getListProduct() {
-    this.listProductService.productListData().subscribe((data: any) => {
-      this.listProduct = data.printingOutlet;
-      // console.log(this.listProduct);
-    });
-  }
 }
+  

@@ -4,10 +4,10 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{listProductID?.categoryName}}</ion-title>
+    <ion-title>Outlet {{ outletName }} </ion-title>
   </ion-toolbar>
   <ion-toolbar color="primary">
-    <ion-searchbar placeholder="Cari outlet makanan ..."></ion-searchbar>
+    <ion-searchbar placeholder="Cari outlet {{ outletName }} ..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +16,8 @@
     <ion-card [routerLink]="['/detail-product']">
       <img [src]="item.outletImg" class="img-outlet" alt="">
       <ion-card-content>
-        <h4>{{ item.outletName }}</h4>
-        <h6>{{ item.outletAddress }}</h6>
+        <h4>{{ item.name_outlet }}</h4>
+        <h6>{{ item.address_outlet }}</h6>
       </ion-card-content>
     </ion-card>
   </ion-grid>

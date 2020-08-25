@@ -1,4 +1,4 @@
-# Jasttips Project
+# Jasttips Project for Customer
 Built with [Ionicframework](https://ionicframework.com/) and [Angular](https://angular.io/). 
 
 ## Let's run:

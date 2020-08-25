@@ -9,10 +9,9 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
   styleUrls: ["./list-product.page.scss"],
 })
 export class ListProductPage implements OnInit {
-  listProductID: any;
-  listProduct: any;
-  outletName: any;
   productId = this.route.snapshot.paramMap.get("productId");
+  outletName: any;
+  listProduct: any;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -28,18 +27,11 @@ export class ListProductPage implements OnInit {
       if (rest && rest.category) {
         for (const listProduct of rest.category) {
           if (listProduct && listProduct.id_category_outlet === this.productId) {
-            this.listProductID = listProduct;
+            const idProduct = listProduct.id_category_outlet;
 
-            if (listProduct.id_category_outlet == 1) {
+            if (idProduct == idProduct) {
               this.jasttipsDataService
-                .getListOutlet(1)
-                .subscribe((rest: any) => {
-                  this.outletName = listProduct.name_category_outlet;
-                  this.listProduct = rest.outlet;
-                });
-            } else if (listProduct.id_category_outlet == 2) {
-              this.jasttipsDataService
-                .getListOutlet(2)
+                .getListOutlet(idProduct)
                 .subscribe((rest: any) => {
                   this.outletName = listProduct.name_category_outlet;
                   this.listProduct = rest.outlet;
@@ -57,28 +49,11 @@ export class ListProductPage implements OnInit {
       if (rest && rest.category) {
         for (const listProduct of rest.category) {
           if (listProduct && listProduct.id_category_outlet === this.productId) {
-            this.listProductID = listProduct;
-            
-            if (listProduct.id_category_outlet == 1) {
-              this.jasttipsDataService
-                .getListOutlet(1)
-                .subscribe((rest: any) => {
-                  this.outletName = listProduct.name_category_outlet;
-                  this.listProduct = rest.outlet;
+            const idProduct = listProduct.id_category_outlet;
 
-                  if (val && val.trim() != "") {
-                    this.listProduct = this.listProduct.filter((item) => {
-                      return (
-                        item.name_outlet
-                          .toLowerCase()
-                          .indexOf(val.toLowerCase()) > -1
-                      );
-                    });
-                  }
-                });
-            } else if (listProduct.id_category_outlet == 2) {
+            if (idProduct == idProduct) {
               this.jasttipsDataService
-                .getListOutlet(2)
+                .getListOutlet(idProduct)
                 .subscribe((rest: any) => {
                   this.outletName = listProduct.name_category_outlet;
                   this.listProduct = rest.outlet;
@@ -99,4 +74,5 @@ export class ListProductPage implements OnInit {
       }
     });
   }
+  
 }

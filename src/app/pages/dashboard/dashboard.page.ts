@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { DashboardService } from '../../api/dashboard/dashboard.service';
-import { ListProductService } from '../../api/product/list-product/list-product.service';
+import { JasttipsDataService } from '../../api/jasttips-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,37 +7,24 @@ import { ListProductService } from '../../api/product/list-product/list-product.
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-  dashboardData: any;
-  listProduct: any;
+  listCategory: any;
 
-  constructor(
-    public dashboardService: DashboardService,
-    public listProductService: ListProductService
-  ) {}
+  constructor(private jasttipsDataService: JasttipsDataService) {}
 
   ngOnInit() {
-    this.getListProduct();
+    this.getData();
   }
 
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 1,
     autoplay: true,
-    speed: 300
+    speed: 300,
   };
 
-  ionViewDidEnter() {
-    this.dashboardService.getDashboard().subscribe((dashboard: any[]) => {
-      this.dashboardData = dashboard;
-    });
-  }
-
-  getListProduct() {
-    this.listProductService.productListData().subscribe((data: any) => {
-      this.listProduct = data.foodOutlet;
-
-      console.log(this.listProduct);
-      
+  getData() {
+    this.jasttipsDataService.getListCategory().subscribe((rest) => {
+      this.listCategory = rest.category;
     });
   }
 }

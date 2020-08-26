@@ -21,17 +21,22 @@ const routes: Routes = [
   },
   {
     path: "list-product/:productId",
-    loadChildren: () =>
-      import("./pages/outlet-product/list-product/list-product.module").then(
-        (m) => m.ListProductPageModule
-      ),
-  },
-  {
-    path: "detail-product/:detailProductId",
-    loadChildren: () =>
-      import(
-        "./pages/outlet-product/detail-product/detail-product.module"
-      ).then((m) => m.DetailProductPageModule),
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import(
+            "./pages/outlet-product/list-product/list-product.module"
+          ).then((m) => m.ListProductPageModule),
+      },
+      {
+        path: "detail-product/:detailProductId",
+        loadChildren: () =>
+          import(
+            "./pages/outlet-product/detail-product/detail-product.module"
+          ).then((m) => m.DetailProductPageModule),
+      },
+    ],
   },
   {
     path: "order",

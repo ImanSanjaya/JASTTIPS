@@ -9,13 +9,16 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
   styleUrls: ["./detail-product.page.scss"],
 })
 export class DetailProductPage implements OnInit {
+  productId = this.route.snapshot.paramMap.get("productId");
+  detailProductId = this.route.snapshot.paramMap.get("detailProductId");
+
+  idOutlet: any;
+  nameOutlet: any;
+  listItem: any;
+
   menuSegment: string;
 
-  listItem: any;
   private currentNumber = 0;
-
-  outletName: any;
-  listProduct;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -25,6 +28,29 @@ export class DetailProductPage implements OnInit {
   ngOnInit() {
     this.menuSegment = "menuLengkap";
     this.getData();
+  }
+
+  getData() {
+    this.jasttipsDataService
+      .getListOutlet(this.productId)
+      .subscribe((rest: any) => {
+        if (rest && rest.outlet) {
+          for (const listProduct of rest.outlet) {
+            const idOutlet = listProduct.id_outlet;
+            const nameOutlet = listProduct.name_outlet;
+            if (idOutlet == this.detailProductId) {
+              this.idOutlet = idOutlet;
+              this.nameOutlet = nameOutlet;
+            }
+          }
+        }
+      });
+
+    this.jasttipsDataService
+      .getListItem(this.detailProductId)
+      .subscribe((rest) => {
+        this.listItem = rest.item;
+      });
   }
 
   // private decrement() {
@@ -41,15 +67,5 @@ export class DetailProductPage implements OnInit {
   //   this.subTotal = this.harga * this.currentNumber;
   // }
 
-  getData() {
-    const detailProductId = this.route.snapshot.paramMap.get("detailProductId");
-
-    this.jasttipsDataService
-      .getListItem(detailProductId)
-      .subscribe((rest) => {
-        this.listItem = rest.item;
-      });
-    
-      console.log();
-    }
+  
 }

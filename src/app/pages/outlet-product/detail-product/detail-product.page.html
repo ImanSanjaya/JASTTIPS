@@ -47,15 +47,15 @@
                 <!-- Plus Minus -->
                 <ion-row>
                   <ion-col size="2">
-                    <ion-button (click)="onClick(decrement())" color="medium" class="ion-button-plus-minus">
+                    <ion-button (click)="decrement(item.id_item)" color="medium" class="ion-button-plus-minus">
                       <b>-</b>
                     </ion-button>
                   </ion-col>
                   <ion-col size="3">
-                    <div class="jml-pesan">{{currentNumber}}</div>
+                    <div class="jml-pesan">{{ qty }}</div>
                   </ion-col>
                   <ion-col size="">
-                    <ion-button (click)="onClick(increment())" color="primary" class="ion-button-plus-minus">
+                    <ion-button (click)="increment(item.id_item)" color="primary" class="ion-button-plus-minus">
                       <b>+</b>
                     </ion-button>
                   </ion-col>
@@ -91,7 +91,8 @@
   </ion-row>
   <ion-toolbar>
     <ion-button [routerLink]="['/delivery-order']" expand="block" color="primary" class="pesan-makanan">
-      Pesan
+      <img src="assets/icon/basket.png" class="img-keranjang" alt="">
+      <div class="txt-keranjang">Keranjang</div>
     </ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -13,12 +13,14 @@ export class DetailProductPage implements OnInit {
   detailProductId = this.route.snapshot.paramMap.get("detailProductId");
 
   idOutlet: any;
+  idItem: any;
   nameOutlet: any;
   listItem: any;
 
-  menuSegment: string;
+  qty: any;
+  subTotal: any = 0;
 
-  private currentNumber = 0;
+  menuSegment: string;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -28,6 +30,7 @@ export class DetailProductPage implements OnInit {
   ngOnInit() {
     this.menuSegment = "menuLengkap";
     this.getData();
+    this.qty = 0;
   }
 
   getData() {
@@ -53,19 +56,44 @@ export class DetailProductPage implements OnInit {
       });
   }
 
-  // private decrement() {
-  //   if (this.currentNumber < 1) {
-  //     this.currentNumber = 0;
-  //   } else {
-  //     this.currentNumber--;
-  //     this.subTotal = this.harga * this.currentNumber;
-  //   }
-  // }
+  decrement(idItem) {
+    if (this.qty < 1) {
+      this.qty = 0;
+    } else {
+      this.jasttipsDataService
+      .getListItem(this.detailProductId)
+      .subscribe((rest) => {
+        for (const idListItem of rest.item) {
+          const idPerQty = idListItem.id_item;
+          const priceItem = idListItem.price_item;
+          if (idItem == idPerQty) {
+            this.qty--;
+            const total = priceItem * 1;
+            
+            this.subTotal -= total;
+            console.log(this.subTotal);
+          }
+          
+        }
+      });
+    }
+  }
 
-  // private increment() {
-  //   this.currentNumber++;
-  //   this.subTotal = this.harga * this.currentNumber;
-  // }
-
-  
+  increment(idItem) {
+    this.jasttipsDataService
+      .getListItem(this.detailProductId)
+      .subscribe((rest) => {
+        for (const idListItem of rest.item) {
+          const idPerQty = idListItem.id_item;
+          const priceItem = idListItem.price_item;
+          if (idItem == idPerQty) {
+            this.qty++;
+            const total = priceItem * 1;
+            this.subTotal += total;
+          }
+          
+        }
+      });
+    
+  }
 }

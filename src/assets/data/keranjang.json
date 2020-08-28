@@ -1,0 +1,20 @@
+{
+  "outlet": [
+    {
+      "id_outlet": "1",
+      "name_outlet": "Kopi Kenangan",
+      "name_item": "Kopi Peka",
+      "img_item": "assets/img/product/detail/img-kopi-kenangan-kopi-peka.jpg",
+      "qty_item": "5",
+      "price_item": "18000"
+    },
+    {
+      "id_outlet": "2",
+      "name_outlet": "Janji Jiwa & Jiwa Toast - Slipi",
+      "name_item": "Beef Truffle Mayo",
+      "img_item": "assets/img/product/detail/img-beef-truffle-mayo.jpg",
+      "qty_item": "2",
+      "price_item": "27000"
+    }
+  ]
+}

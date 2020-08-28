@@ -4,43 +4,102 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Detail Pesan Makanan</ion-title>
+    <ion-title>Keranjang</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form>
     <ion-list class="ion-padding">
+      <h4>Data Diri</h4>
       <ion-item class="ion-no-padding">
-        <ion-label position="floating">Nama</ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.name_customer" [ngModelOptions]="{standalone: true}" required
-          type="text">
+        <ion-label position="stacked">
+          <ion-row>
+            <ion-text color="danger">*</ion-text>Nama
+          </ion-row>
+        </ion-label>
+        <ion-input [(ngModel)]="formDeliveryOrder.name_customer" [ngModelOptions]="{standalone: true}" type="text"
+          placeholder="Nama lengkapmu ...">
         </ion-input>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">
+          <ion-row>
+            <ion-text color="danger">*</ion-text>Nomor Telp
+          </ion-row>
+        </ion-label>
+        <ion-input [(ngModel)]="formDeliveryOrder.phone_customer" [ngModelOptions]="{standalone: true} " type="text"
+          placeholder="Prioritas nomer WhatsApp">
+        </ion-input>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">
+          <ion-row>
+            <ion-text color="danger">*</ion-text>Alamat
+          </ion-row>
+        </ion-label>
+        <ion-input [(ngModel)]="formDeliveryOrder.address_customer" [ngModelOptions]="{standalone: true}" type="text"
+          placeholder="Alamat lengkapmu ...">
+        </ion-input>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">Pesan Tambahan</ion-label>
+        <ion-textarea [(ngModel)]="formDeliveryOrder.additional_message" [ngModelOptions]="{standalone: true}" placeholder="Mie Kocoknya jangan pake cuka ya, Sama Kopinya jangan lupa pake es"></ion-textarea>
       </ion-item>
     </ion-list>
-    <ion-list class="ion-padding">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating">Nomor HP (prioritas WhatsApp)</ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.phone_customer" [ngModelOptions]="{standalone: true}" required
-          type="text">
-        </ion-input>
-      </ion-item>
-    </ion-list>
-    <ion-list class="ion-padding">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating">Alamat</ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.address_customer" [ngModelOptions]="{standalone: true}" required
-          type="text">
-        </ion-input>
-      </ion-item>
+    <ion-list style="margin-top: -25px">
+      <h4 class="ion-padding" style="margin-bottom: -10px">Detail Pesanan</h4>
+      <ion-card *ngFor="let outlet of dataOutlet">
+        <ion-card-header color="medium">
+          <ion-card-subtitle style="font-weight: bold;">{{ outlet.name_outlet }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content style="margin-top: 10px;">
+          <ion-row>
+            <ion-col size="4">
+              <img [src]="outlet.img_item" class="img-pesan-makanan" alt="" />
+            </ion-col>
+            <ion-col size="8">
+              <ion-grid>
+                <ion-text color="dark">
+                  <div class="title">
+                    {{ outlet.name_item }}
+                  </div>
+                </ion-text>
+                <ion-text color="medium">
+                  <div class="content">
+                    {{ outlet.qty_item }} Item
+                  </div>
+                </ion-text>
+                <ion-text color="medium">
+                  <div class="content">
+                    {{ outlet.price_item | currency:'Rp. ':true:'1.0' }}
+                  </div>
+                </ion-text>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </ion-list>
   </form>
 </ion-content>
 
 <ion-footer>
-  <ion-list class="ion-padding">
-    <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary">
-      Order
+  <ion-row>
+    <ion-col size="6">
+      <h4 class="total">Total</h4>
+    </ion-col>
+    <ion-col size="6">
+      <ion-text color="primary">
+        <h4 class="sub-total" color="primary">
+          {{subTotal | currency:'Rp. ':true:'1.0'}}
+        </h4>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-toolbar>
+    <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary" class="btn-pesan">
+      <div class="txt-keranjang">Pesan</div>
     </ion-button>
-  </ion-list>
+  </ion-toolbar>
 </ion-footer>

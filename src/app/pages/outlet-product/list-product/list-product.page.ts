@@ -10,7 +10,7 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
 })
 export class ListProductPage implements OnInit {
   productId = this.route.snapshot.paramMap.get("productId");
-  outletName: any;
+  nameCategory: any;
   listProduct: any;
 
   constructor(
@@ -33,7 +33,7 @@ export class ListProductPage implements OnInit {
               this.jasttipsDataService
                 .getListOutlet(idProduct)
                 .subscribe((rest: any) => {
-                  this.outletName = listProduct.name_category_outlet;
+                  this.nameCategory = listProduct.name_category_outlet;
                   this.listProduct = rest.outlet;
                 });
             }
@@ -55,7 +55,7 @@ export class ListProductPage implements OnInit {
               this.jasttipsDataService
                 .getListOutlet(idProduct)
                 .subscribe((rest: any) => {
-                  this.outletName = listProduct.name_category_outlet;
+                  this.nameCategory = listProduct.name_category_outlet;
                   this.listProduct = rest.outlet;
 
                   if (val && val.trim() != "") {

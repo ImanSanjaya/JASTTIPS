@@ -4,17 +4,17 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ outletName }} </ion-title>
+    <ion-title>{{ nameCategory }} </ion-title>
   </ion-toolbar>
   <ion-toolbar color="primary">
-    <ion-searchbar (ionInput)="filterData($event)"  placeholder="Cari Outlet {{ outletName }} ..."></ion-searchbar>
+    <ion-searchbar (ionInput)="filterData($event)"  placeholder="Cari Outlet {{ nameCategory }} ..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid *ngFor="let item of listProduct">
     <ion-card routerLink="/list-product/{{ productId }}/detail-product/{{ item.id_outlet }}" routerLinkActive="router-link-active" >
-      <img src="assets/img/product/list/img-outlet-hisana.jpg" class="img-outlet" alt="">
+      <img [src]="item.img_path_outlet" class="img-outlet" alt="">
       <ion-card-content>
         <h4>{{ item.name_outlet }}</h4>
         <h6>{{ item.address_outlet }}</h6>

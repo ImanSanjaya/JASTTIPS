@@ -14,10 +14,13 @@ export class DetailProductPage implements OnInit {
 
   idOutlet: any;
   idItem: any;
-  nameOutlet: any;
-  listItem: any;
 
-  qty: any;
+  nameOutlet: any;
+  imgOutlet: any;
+
+  items: any[] = [];
+
+  total: any;
   subTotal: any = 0;
 
   menuSegment: string;
@@ -25,12 +28,11 @@ export class DetailProductPage implements OnInit {
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.menuSegment = "menuLengkap";
     this.getData();
-    this.qty = 0;
   }
 
   getData() {
@@ -41,9 +43,11 @@ export class DetailProductPage implements OnInit {
           for (const listProduct of rest.outlet) {
             const idOutlet = listProduct.id_outlet;
             const nameOutlet = listProduct.name_outlet;
+            const imgOutlet = listProduct.img_path_outlet;
             if (idOutlet == this.detailProductId) {
               this.idOutlet = idOutlet;
               this.nameOutlet = nameOutlet;
+              this.imgOutlet = imgOutlet;
             }
           }
         }
@@ -51,49 +55,29 @@ export class DetailProductPage implements OnInit {
 
     this.jasttipsDataService
       .getListItem(this.detailProductId)
-      .subscribe((rest) => {
-        this.listItem = rest.item;
+      .subscribe((items) => {
+        this.items = items["item"].map((item) => {
+          return {
+            ...item,
+            qty: 0,
+          };
+        });
       });
   }
 
-  decrement(idItem) {
-    if (this.qty < 1) {
-      this.qty = 0;
+  decrement(item) {
+    if ((item.qty < 1)) {
+      item.qty = 0;
     } else {
-      this.jasttipsDataService
-      .getListItem(this.detailProductId)
-      .subscribe((rest) => {
-        for (const idListItem of rest.item) {
-          const idPerQty = idListItem.id_item;
-          const priceItem = idListItem.price_item;
-          if (idItem == idPerQty) {
-            this.qty--;
-            const total = priceItem * 1;
-            
-            this.subTotal -= total;
-            console.log(this.subTotal);
-          }
-          
-        }
-      });
+      item.qty = item.qty - 1;
+      this.total = item.price_item * 1;
+      this.subTotal -= this.total;
     }
   }
 
-  increment(idItem) {
-    this.jasttipsDataService
-      .getListItem(this.detailProductId)
-      .subscribe((rest) => {
-        for (const idListItem of rest.item) {
-          const idPerQty = idListItem.id_item;
-          const priceItem = idListItem.price_item;
-          if (idItem == idPerQty) {
-            this.qty++;
-            const total = priceItem * 1;
-            this.subTotal += total;
-          }
-          
-        }
-      });
-    
+  increment(item) {
+    item.qty = item.qty + 1;
+    this.total = item.price_item * 1;
+    this.subTotal += this.total;
   }
 }

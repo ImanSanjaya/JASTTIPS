@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-  <img src="assets/img/product/list/img-outlet-gurame.jpeg" class="img-outlet" alt="" />
+  <img [src]="imgOutlet" class="img-outlet" alt="" />
 
   <!-- Toolbar Segment -->
   <ion-item-divider sticky class="ion-no-padding">
@@ -25,11 +25,11 @@
   <div [ngSwitch]="menuSegment">
     <!-- Segment Rekomendasi -->
     <div *ngSwitchCase="'menuLengkap'">
-      <ion-card *ngFor="let item of listItem">
+      <ion-card *ngFor="let item of items">
         <ion-grid fixed>
           <ion-row>
             <ion-col size="4">
-              <img src="assets/img/product/detail/img-makanan-gurame.jpg" class="img-pesan-makanan" alt="" />
+              <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
             </ion-col>
             <ion-col size="8">
               <ion-grid fixed class="isi-content">
@@ -47,15 +47,15 @@
                 <!-- Plus Minus -->
                 <ion-row>
                   <ion-col size="2">
-                    <ion-button (click)="decrement(item.id_item)" color="medium" class="ion-button-plus-minus">
+                    <ion-button (click)="decrement(item)" color="medium" class="ion-button-plus-minus">
                       <b>-</b>
                     </ion-button>
                   </ion-col>
                   <ion-col size="3">
-                    <div class="jml-pesan">{{ qty }}</div>
+                    <div class="jml-pesan">{{ item.qty }}</div>
                   </ion-col>
                   <ion-col size="">
-                    <ion-button (click)="increment(item.id_item)" color="primary" class="ion-button-plus-minus">
+                    <ion-button (click)="increment(item)" color="primary" class="ion-button-plus-minus">
                       <b>+</b>
                     </ion-button>
                   </ion-col>

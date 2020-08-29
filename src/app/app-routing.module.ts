@@ -15,7 +15,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: "list-product/3",
+    path: "list-product/2",
     loadChildren: () =>
       import("./pages/order/order.module").then((m) => m.OrderPageModule),
   },

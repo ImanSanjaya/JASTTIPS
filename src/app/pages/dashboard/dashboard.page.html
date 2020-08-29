@@ -18,12 +18,14 @@
       <ion-col class="ion-no-padding" size="4" *ngFor="let item of listCategory">
         <ion-card routerLink="/list-product/{{item.id_category_outlet}}" routerLinkActive="router-link-active">
           <ion-card-header>
-            <img [src]="item.file_path_category_outlet" class="dashboard-img" alt="" />
+            <img [src]="item.img_path_category_outlet" alt="" class="img-category"/>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            <h3 class="ion-text-center">
-              {{ item.name_category_outlet }}
-            </h3>
+            <div class="ion-text-capitalize">
+              <h3 class="ion-text-center">
+                {{ item.name_category_outlet }}
+              </h3>
+            </div>
           </ion-card-content>
         </ion-card>
       </ion-col>

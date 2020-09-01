@@ -1,0 +1,22 @@
+<ion-content>
+
+  <div class="logo-jasttips">
+    <img src="assets/logo/logo-jasttips.png" alt="Ionic Logo">
+  </div>
+
+  <ion-list class="ion-padding">
+    <ion-item class="ion-no-padding">
+      <ion-label position="floating">Nama Lengkap</ion-label>
+      <ion-input [(ngModel)]="username" type="text" required></ion-input>
+    </ion-item>
+    <ion-item class="ion-no-padding">
+      <ion-label style="margin-top: 10px;">+62</ion-label>
+      <ion-input [(ngModel)]="no_telp_user" placeholder="878 xxxx xxxx" type="number" required></ion-input>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button (click)="onSignUp()" expand="block" shape="round">
+      Masuk
+    </ion-button>
+  </div>
+</ion-content>

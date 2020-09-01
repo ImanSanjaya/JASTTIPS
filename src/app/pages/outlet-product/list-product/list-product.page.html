@@ -23,8 +23,11 @@
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button [routerLink]="['/delivery-order']">
       <img src="assets/icon/basket.png" alt="">
+      <ion-badge color="danger">
+        {{ cartItemCount | async }}
+      </ion-badge>
     </ion-fab-button>
   </ion-fab>
 

@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
+import { BehaviorSubject } from 'rxjs';
+
 import { JasttipsDataService } from "../../../api/jasttips-data.service";
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: "app-list-product",
@@ -13,13 +16,19 @@ export class ListProductPage implements OnInit {
   nameCategory: any;
   listProduct: any;
 
+  cart = [];
+  cartItemCount: BehaviorSubject<number>;
+
   constructor(
     private jasttipsDataService: JasttipsDataService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.getData();
+    this.cart = this.cartService.getChart();
+    this.cartItemCount = this.cartService.getCartItemCount();
   }
 
   getData() {
@@ -29,7 +38,7 @@ export class ListProductPage implements OnInit {
           if (listProduct && listProduct.id_category_outlet === this.productId) {
             const idProduct = listProduct.id_category_outlet;
 
-            if (idProduct == idProduct) {
+            if (idProduct) {
               this.jasttipsDataService
                 .getListOutlet(idProduct)
                 .subscribe((rest: any) => {
@@ -51,7 +60,7 @@ export class ListProductPage implements OnInit {
           if (listProduct && listProduct.id_category_outlet === this.productId) {
             const idProduct = listProduct.id_category_outlet;
 
-            if (idProduct == idProduct) {
+            if (idProduct) {
               this.jasttipsDataService
                 .getListOutlet(idProduct)
                 .subscribe((rest: any) => {

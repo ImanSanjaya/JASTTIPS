@@ -10,7 +10,20 @@ ion-card-content h4 {
   color: var(--ion-color-dark);
 }
 
+ion-fab-button {
+  width: 70px;
+  --border-radius: 10px
+}
+
 ion-fab-button img {
-  width: 50%;
-  height: 50%;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+ion-badge {
+  border-radius: 100px;
+  padding: 5px;
+  margin-left: -10px;
+  margin-top: -15px;
 }

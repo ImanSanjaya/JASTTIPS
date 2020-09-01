@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { JasttipsDataService } from "../../../api/jasttips-data.service";
+import { BehaviorSubject } from "rxjs";
+import { CartService } from "src/app/services/cart.service";
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: "app-detail-product",
@@ -18,41 +21,55 @@ export class DetailProductPage implements OnInit {
   nameOutlet: any;
   imgOutlet: any;
 
+  outlets: any[] = [];
   items: any[] = [];
 
+  cart = [];
+  cartItemCount: BehaviorSubject<number>;
+
   total: any;
-  subTotal: any = 0;
+  subTotal: any;
 
   menuSegment: string;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
+    private cartService: CartService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.menuSegment = "menuLengkap";
-    this.getData();
+    this.getDataOutlet();
+    this.getDataItems();
+    this.cart = this.cartService.getChart();
+    this.cartItemCount = this.cartService.getCartItemCount();
   }
 
-  getData() {
+  getDataOutlet() {
     this.jasttipsDataService
       .getListOutlet(this.productId)
-      .subscribe((rest: any) => {
-        if (rest && rest.outlet) {
-          for (const listProduct of rest.outlet) {
-            const idOutlet = listProduct.id_outlet;
-            const nameOutlet = listProduct.name_outlet;
-            const imgOutlet = listProduct.img_path_outlet;
-            if (idOutlet == this.detailProductId) {
-              this.idOutlet = idOutlet;
-              this.nameOutlet = nameOutlet;
-              this.imgOutlet = imgOutlet;
-            }
+      .subscribe((outlets) => {
+
+        this.outlets = outlets["outlet"].map((outlet) => {
+          return {
+            ...outlet,
+            sub_total: 0,
+          };
+        });
+
+        for (const outlet of this.outlets) {
+          if (outlet.id_outlet == this.detailProductId) {
+            this.idOutlet = outlet.id_outlet;
+            this.nameOutlet = outlet.name_outlet;
+            this.imgOutlet = outlet.img_path_outlet;
+            this.subTotal = outlet.sub_total;
           }
         }
-      });
+      });    
+  }
 
+  getDataItems() {
     this.jasttipsDataService
       .getListItem(this.detailProductId)
       .subscribe((items) => {
@@ -60,11 +77,14 @@ export class DetailProductPage implements OnInit {
           return {
             ...item,
             qty: 0,
+            total: 0
           };
         });
       });
   }
 
+
+  // Masih Bag
   decrement(item) {
     if ((item.qty < 1)) {
       item.qty = 0;
@@ -72,12 +92,19 @@ export class DetailProductPage implements OnInit {
       item.qty = item.qty - 1;
       this.total = item.price_item * 1;
       this.subTotal -= this.total;
+      localStorage.setItem("subTotal", this.subTotal);
+      this.cartItemCount.next(this.cartItemCount.value - 1)
     }
   }
 
   increment(item) {
-    item.qty = item.qty + 1;
-    this.total = item.price_item * 1;
-    this.subTotal += this.total;
+    item.qty += 1;
+    item.total = item.price_item * 1;
+    console.log(item.qty);
+    
+    this.subTotal += item.total;
+    this.cartItemCount.next(this.cartItemCount.value + 1);
   }
+
+  // End Masih Bag
 }

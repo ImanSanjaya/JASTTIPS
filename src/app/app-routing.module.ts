@@ -4,8 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dashboard",
+    redirectTo: "sign-up",
     pathMatch: "full",
+  },
+  {
+    path: "sign-up",
+    loadChildren: () =>
+      import("./pages/sign-up/sign-up.module").then(
+        (m) => m.SignUpPageModule
+      ),
   },
   {
     path: "dashboard",
@@ -50,6 +57,15 @@ const routes: Routes = [
         "./pages/outlet-product/delivery-order/delivery-order.module"
       ).then((m) => m.DeliveryOrderPageModule),
   },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./pages/sign-up/sign-up.module').then( m => m.SignUpPageModule)
+  },  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+  },
+
+
 ];
 
 @NgModule({

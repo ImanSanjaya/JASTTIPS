@@ -7,11 +7,17 @@ import { JasttipsDataService } from '../../api/jasttips-data.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+
+  username: string;
+  no_telp_user: string;
+
   listCategory: any;
 
   constructor(private jasttipsDataService: JasttipsDataService) {}
 
   ngOnInit() {
+    this.username = localStorage.getItem('username')
+    this.no_telp_user = localStorage.getItem('no_telp_user')
     this.getData();
   }
 

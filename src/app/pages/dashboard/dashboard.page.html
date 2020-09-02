@@ -1,4 +1,8 @@
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="header-info">
     <img src="assets/banner/icon-tugu-padi.jpeg" alt="" />
     <div class="ion-text-center ion-padding">
@@ -17,19 +21,19 @@
       <ion-col size="7" class="card-user">
         <ion-row>
           <img src="assets/icon/user-48.png" alt="" class="icon-user">
-          <ion-text color="dark" class="mt-user">
+          <ion-text color="dark" class="mt-user ion-text-capitalize">
             <h6>{{ username }}</h6>
           </ion-text>
         </ion-row>
         <ion-row class="phone-user">
           <img src="assets/icon/android-48.png" alt="" class="icon-user">
           <ion-text color="dark" class="mt-user">
-            <h6>{{ no_telp_user }}</h6>
+            <h6>+{{ no_telp_user }}</h6>
           </ion-text>
         </ion-row>
       </ion-col>
       <ion-col size="5" class="edit-profile">
-        <a href="" >Edit Profile</a>
+        <a (click)="account()" >Edit Profile</a>
       </ion-col>
 
     </ion-row>
@@ -65,11 +69,11 @@
       <ion-col size="12" class="category">
         <ion-label class="ion-no-padding">Promo</ion-label>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" class="ion-no-padding">
         <ion-card color="primary" class="card-promo">
           <ion-slides pager="true" scroll-y="false" [options]="slideOptsOne">
-            <ion-slide *ngFor="let item of listProduct">
-              <img [src]="item.outletImg" alt="" />
+            <ion-slide *ngFor="let item of itemPromo">
+              <img routerLink="/list-product/{{ item.id_category_outlet }}/detail-product/{{ item.id_outlet }}" routerLinkActive="router-link-active"  [src]="item.img_path_outlet" alt="" />
             </ion-slide>
           </ion-slides>
         </ion-card>

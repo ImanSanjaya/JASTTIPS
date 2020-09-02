@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { CheckSignupService } from './services/check-signup.service';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/sign-up/sign-up.module").then(
         (m) => m.SignUpPageModule
-      ),
+      ),canLoad: [CheckSignupService]
   },
   {
     path: "dashboard",
@@ -60,9 +61,10 @@ const routes: Routes = [
   {
     path: 'sign-up',
     loadChildren: () => import('./pages/sign-up/sign-up.module').then( m => m.SignUpPageModule)
-  },  {
-    path: 'user',
-    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
 
 

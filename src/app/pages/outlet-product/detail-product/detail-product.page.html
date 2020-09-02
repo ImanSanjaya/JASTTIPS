@@ -9,6 +9,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <img [src]="imgOutlet" class="img-outlet" alt="" />
 
   <!-- Toolbar Segment -->
@@ -26,45 +30,52 @@
     <!-- Segment Rekomendasi -->
     <div *ngSwitchCase="'menuLengkap'">
       <ion-card *ngFor="let item of items">
-        <ion-grid fixed>
-          <ion-row>
-            <ion-col size="4">
-              <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
-            </ion-col>
-            <ion-col size="8">
-              <ion-grid fixed class="isi-content">
+        <ion-row class="item">
+          <ion-col size="5">
+            <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
+          </ion-col>
+          <ion-col size="7" class="detail-item">
+            <ion-row>
+              <ion-col size="12">
                 <ion-text color="dark">
                   <div class="title" style="margin-left: 10px; margin-bottom: 8px;">
                     {{ item.name_item }}
                   </div>
                 </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding">
+              <ion-col size="6">
                 <ion-text color="medium">
-                  <div class="content" style="margin-left: 10px; margin-bottom: 8px;">
+                  <div class="price" style="margin-left: 10px; margin-bottom: 8px;">
                     {{item.price_item | currency:'Rp. ':true:'1.0'}}
                   </div>
                 </ion-text>
+                <ion-col size="6">
+                  
+                </ion-col>
+              </ion-col>
+            </ion-row>
 
-                <!-- Plus Minus -->
-                <ion-row>
-                  <ion-col size="2">
-                    <ion-button (click)="decrement(item)" color="medium" class="ion-button-plus-minus">
-                      <b>-</b>
-                    </ion-button>
-                  </ion-col>
-                  <ion-col size="3">
-                    <div class="jml-pesan">{{ item.qty }}</div>
-                  </ion-col>
-                  <ion-col size="">
-                    <ion-button (click)="increment(item)" color="primary" class="ion-button-plus-minus">
-                      <b>+</b>
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-                <!-- End Plus Minus -->
-              </ion-grid>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+            <!-- Plus Minus -->
+            <ion-row class="plus-minus">
+              <ion-col size="2">
+                <ion-button (click)="decrement(item)" color="medium" class="ion-button-plus-minus">
+                  <b>-</b>
+                </ion-button>
+              </ion-col>
+              <ion-col size="3">
+                <div class="qty">{{ item.qty }}</div>
+              </ion-col>
+              <ion-col size="">
+                <ion-button (click)="increment(item)" color="primary" class="ion-button-plus-minus">
+                  <b>+</b>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <!-- End Plus Minus -->
+          </ion-col>
+        </ion-row>
       </ion-card>
     </div>
     <!-- End Segment Rekomendasi -->

@@ -4,19 +4,34 @@
     <img src="assets/logo/logo-jasttips.png" alt="Ionic Logo">
   </div>
 
-  <ion-list class="ion-padding">
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">Nama Lengkap</ion-label>
-      <ion-input [(ngModel)]="username" type="text" required></ion-input>
-    </ion-item>
-    <ion-item class="ion-no-padding">
-      <ion-label style="margin-top: 10px;">+62</ion-label>
-      <ion-input [(ngModel)]="no_telp_user" placeholder="878 xxxx xxxx" type="number" required></ion-input>
-    </ion-item>
-  </ion-list>
-  <div class="ion-padding">
-    <ion-button (click)="onSignUp()" expand="block" shape="round">
-      Masuk
-    </ion-button>
-  </div>
+  <form #signupForm="ngForm">
+    <ion-list lines="none" class="ion-padding">
+      <ion-item class="ion-no-padding" style="margin-bottom: 20px;">
+        <ion-label position="stacked" color="primary">Nama Lengkap</ion-label>
+        <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" placeholder="Masukan nama lengkap anda" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="username.valid || submitted == false" class="ion-no-padding" >
+          Nama lengkap harus di isi
+        </p>
+      </ion-text>
+
+      <ion-label color="primary" style="margin-top: 100px; font-size: 12px;">No WhatsApp</ion-label>
+      <ion-item class="ion-no-padding">
+        <ion-label style="margin-top: 10px;">+62</ion-label>
+        <ion-input [(ngModel)]="signup.no_telp_user" name="no_telp_user" type="number" #no_telp_user="ngModel" placeholder="812 3456 xxxx" required>
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="no_telp_user.valid || submitted == false" class="ion-no-padding">
+          No telp harus di isi
+        </p>
+      </ion-text>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Masuk</ion-button>
+    </div>
+  </form>
 </ion-content>

@@ -15,6 +15,7 @@ import { SignUpPage } from './sign-up.page';
     IonicModule,
     SignUpPageRoutingModule
   ],
-  declarations: [SignUpPage]
+  declarations: [SignUpPage],
+  entryComponents: [SignUpPage],
 })
 export class SignUpPageModule {}

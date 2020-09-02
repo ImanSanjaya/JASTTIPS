@@ -31,6 +31,16 @@ export class ListProductPage implements OnInit {
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.getData();
+      event.target.complete();
+    }, 2000);
+  }
+
   getData() {
     this.jasttipsDataService.getListCategory().subscribe((rest) => {
       if (rest && rest.category) {

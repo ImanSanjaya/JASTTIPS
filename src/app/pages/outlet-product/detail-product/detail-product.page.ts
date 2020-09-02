@@ -46,6 +46,17 @@ export class DetailProductPage implements OnInit {
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.getDataOutlet();
+      this.getDataItems();
+      event.target.complete();
+    }, 2000);
+  }
+
   getDataOutlet() {
     this.jasttipsDataService
       .getListOutlet(this.productId)

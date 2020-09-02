@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { map } from "rxjs/operators";
+import { UserData } from 'src/app/api/user-data';
 
 @Component({
   selector: "app-delivery-order",
@@ -14,6 +15,9 @@ import { map } from "rxjs/operators";
 export class DeliveryOrderPage implements OnInit {
   data: any;
 
+  username: string;
+  no_telp_user: string;
+
   idOutlet: any;
   dataOutlet: any;
 
@@ -22,16 +26,31 @@ export class DeliveryOrderPage implements OnInit {
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
-    private http: HttpClient
+    private http: HttpClient,
+    private userData: UserData,
   ) {}
 
   ngOnInit() {
     this.getOutlet();
+    this.getUsername();
+    this.getNoTelpUser();
+  }
+
+  getUsername() {
+    this.userData.getUsername().then((username) => {
+      this.username = username;
+    });
+  }
+
+  getNoTelpUser() {
+    this.userData.getNoTelpUser().then((no_telp_user) => {
+      this.no_telp_user = no_telp_user;
+    });
   }
 
   formDeliveryOrder = {
-    name_customer: "",
-    phone_customer: "",
+    name_customer: this.username,
+    phone_customer: this.no_telp_user,
     address_customer: "",
     additional_message: "",
   };
@@ -57,7 +76,8 @@ export class DeliveryOrderPage implements OnInit {
   submitDeliveryOrder() {
     open(
       this.jasttipsDataService.sendMessageForDeliveryOrder(
-        "6287869667004",
+        // "6287869667004",
+        "6287879571222",
         this.formDeliveryOrder
       )
     );

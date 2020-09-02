@@ -1,33 +1,51 @@
-h6 {
+.img-outlet {
+  width: 100%;
+  height: auto;
+}
+
+ion-card {
+  padding-left: 5px;
+  height: 135px;
+}
+
+.img-pesan-makanan {
+  margin-top: 4px;
+  width: 100%;
+  height: 85%;
+  border-radius: 10px;
+}
+
+.detail-item {
+  margin-left: -5px;
+}
+
+.title {
+  font-size: 15px;
   font-weight: bold;
+}
+
+.price {
+  margin-top: -8px;
+  font-size: 13px; 
+  font-weight: bold;
+}
+
+.qty {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  padding-left: 15px;
+}
+
+.plus-minus {
+  margin-top: -25px;
+  margin-left: 7px;
 }
 
 .ion-button-plus-minus {
   width: 30px;
   height: 30px;
-}
-
-ion-icon {
-  width: 15px;
-  height: 15px;
-}
-
-.jml-pesan {
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-}
-
-ion-card {
-  padding-top: 10px;
-  padding-left: 5px;
-  padding-bottom: 10px;
-}
-
-.btn-keranjang {
-  padding: 10px;
-  height: 60px;
 }
 
 .total {
@@ -42,30 +60,9 @@ ion-card {
   margin-right: 10px;
 }
 
-.img-pesan-makanan {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-}
-
-.img-outlet {
-  width: 100%;
-  height: auto;
-}
-
-.title {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.content {
-  font-size: 13px; 
-  font-weight: bold;
-}
-
-.detail-makanan {
-  margin-left: 10px; 
-  margin-bottom: 8px;
+.btn-keranjang {
+  padding: 10px;
+  height: 60px;
 }
 
 .img-keranjang {

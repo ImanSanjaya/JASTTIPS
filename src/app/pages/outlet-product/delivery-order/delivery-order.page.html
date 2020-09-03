@@ -18,7 +18,7 @@
             <ion-text color="danger">*</ion-text>Nama
           </ion-row>
         </ion-label>
-        <ion-input class="mt-user ion-text-capitalize" [(ngModel)]="formDeliveryOrder.name_customer" [ngModelOptions]="{standalone: true}" type="text" value="{{ username }}" disabled>
+        <ion-input class="mt-user ion-text-capitalize" [(ngModel)]="formDeliveryOrder.name_customer" [ngModelOptions]="{standalone: true}" type="text" value="{{ username }}" readonly>
         </ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">
@@ -27,7 +27,7 @@
             <ion-text color="danger">*</ion-text>Nomor Telp
           </ion-row>
         </ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.phone_customer" [ngModelOptions]="{standalone: true} " type="text" value="{{ no_telp_user }}" disabled>
+        <ion-input [(ngModel)]="formDeliveryOrder.phone_customer" [ngModelOptions]="{standalone: true} " type="text" value="{{ no_telp_user }}" readonly>
         </ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">

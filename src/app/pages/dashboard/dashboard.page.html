@@ -49,7 +49,7 @@
       </ion-col>
       <ion-col class="ion-no-padding" size="4" *ngFor="let item of listCategory">
         <ion-card routerLink="/list-product/{{item.id_category_outlet}}" routerLinkActive="router-link-active">
-          <ion-card-header>
+          <ion-card-header class="ion-no-padding">
             <img [src]="item.img_path_category_outlet" alt="" class="img-category" />
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
@@ -81,12 +81,8 @@
     </ion-row>
   </ion-grid>
 
-
-</ion-content>
-
-<ion-footer class="ion-no-border">
   <ion-toolbar class="ion-no-padding" style="margin-top: -20px;">
     <img style="margin-bottom: -5px;" src="assets/banner/output-onlinepngtools.png" alt="" />
     <div class="footer"></div>
   </ion-toolbar>
-</ion-footer>
+</ion-content>

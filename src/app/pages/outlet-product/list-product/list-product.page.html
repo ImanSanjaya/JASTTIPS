@@ -4,10 +4,16 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ nameCategory }} </ion-title>
+    <ion-title *ngIf="nameCategory">{{ nameCategory }} </ion-title>
+    <ion-title *ngIf="!nameCategory">
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+    </ion-title>
   </ion-toolbar>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" *ngIf="nameCategory">
     <ion-searchbar (ionInput)="filterData($event)" placeholder="Cari Outlet {{ nameCategory }} ..."></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar color="primary" *ngIf="!nameCategory">
+    <ion-skeleton-text class="ion-padding" animated style="width: 100%"></ion-skeleton-text>
   </ion-toolbar>
 </ion-header>
 

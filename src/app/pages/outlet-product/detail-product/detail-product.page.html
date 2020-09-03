@@ -12,7 +12,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <img [src]="imgOutlet" class="img-outlet" alt="" />
 
   <!-- Toolbar Segment -->
@@ -31,8 +31,8 @@
     <div *ngSwitchCase="'menuLengkap'">
       <ion-card *ngFor="let item of items">
         <ion-row class="item">
-          <ion-col size="5">
-            <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
+          <ion-col size="5" class="col-img-food">
+            <img [src]="item.img_path_item" class="img-food" alt="" />
           </ion-col>
           <ion-col size="7" class="detail-item">
             <ion-row>
@@ -46,14 +46,28 @@
             </ion-row>
             <ion-row class="ion-no-padding">
               <ion-col size="6">
-                <ion-text color="medium">
-                  <div class="price" style="margin-left: 10px; margin-bottom: 8px;">
-                    {{item.price_item | currency:'Rp. ':true:'1.0'}}
-                  </div>
-                </ion-text>
-                <ion-col size="6">
-                  
-                </ion-col>
+                <ion-row>
+                  <ion-text color="medium">
+                    <div class="price-promo" *ngIf="item.status_promo == '1';else noPromo">
+                      {{item.price_item | currency:'Rp. ':true:'1.0'}}
+                    </div>
+                    <ng-template #noPromo>
+                      <div class="price">
+                        {{item.price_item | currency:'Rp. ':true:'1.0'}}
+                      </div>
+                    </ng-template>
+                  </ion-text>
+                </ion-row>
+                <ion-row>
+                  <ion-text color="medium">
+                    <div class="price" *ngIf="item.status_promo == '1'">
+                      {{item.price_item_promo | currency:'Rp. ':true:'1.0'}}
+                    </div>
+                  </ion-text>
+                </ion-row>
+              </ion-col>
+              <ion-col size="6" *ngIf="item.status_promo == '1'">
+                <ion-badge color="primary" mode="ios">Promo</ion-badge>
               </ion-col>
             </ion-row>
 
@@ -81,7 +95,6 @@
     <!-- End Segment Rekomendasi -->
 
     <!-- Segment Menu Lengkap -->
-    
     <!-- End Segment Menu Lengkap -->
   </div>
   <!-- End Segment -->

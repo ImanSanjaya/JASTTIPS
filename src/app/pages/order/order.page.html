@@ -4,7 +4,10 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ category }}</ion-title>
+    <ion-title *ngIf="category">{{ category }}</ion-title>
+    <ion-title *ngIf="!category">
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 

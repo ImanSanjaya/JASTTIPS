@@ -17,13 +17,19 @@
 
 <ion-content>
   <ion-grid fixed class="ion-padding">
-    <ion-row>
+    <ion-row *ngIf="username">
       <h6>Nama Lengkap : </h6>
       <h6 class="ion-text-capitalize">{{ username }}</h6>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="no_telp_user">
       <h6>No WhatsApp : </h6>
       <h6>+{{ no_telp_user }}</h6>
+    </ion-row>
+    <ion-row *ngIf="!username" style="margin-top: 15px; margin-left: 5px;">
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+    </ion-row>
+    <ion-row *ngIf="!no_telp_user" style="margin-top: 28px; margin-left: 5px;">
+      <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
     </ion-row>
   </ion-grid>
 

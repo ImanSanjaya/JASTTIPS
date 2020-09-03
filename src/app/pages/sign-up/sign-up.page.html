@@ -5,10 +5,10 @@
   </div>
 
   <form #signupForm="ngForm">
-    <ion-list lines="none" class="ion-padding">
+    <ion-list class="ion-padding">
       <ion-item class="ion-no-padding" style="margin-bottom: 20px;">
         <ion-label position="stacked" color="primary">Nama Lengkap</ion-label>
-        <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" placeholder="Masukan nama lengkap anda" required>
+        <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" placeholder="Masukan nama lengkap anda" required autofocus="true">
         </ion-input>
       </ion-item>
       <ion-text color="danger">
@@ -25,7 +25,7 @@
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="no_telp_user.valid || submitted == false" class="ion-no-padding">
-          No telp harus di isi
+          No WhatsApp harus di isi
         </p>
       </ion-text>
     </ion-list>

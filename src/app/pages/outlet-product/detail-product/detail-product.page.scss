@@ -5,17 +5,17 @@
 
 ion-card {
   padding-left: 5px;
-  height: 135px;
 }
 
-.img-pesan-makanan {
+.img-food {
   margin-top: 4px;
   width: 100%;
-  height: 85%;
+  height: 90%;
   border-radius: 10px;
 }
 
 .detail-item {
+  padding-top: 10px;
   margin-left: -5px;
 }
 
@@ -25,9 +25,29 @@ ion-card {
 }
 
 .price {
-  margin-top: -8px;
+  margin-top: -10px;
   font-size: 13px; 
   font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
+
+.price-promo {
+  margin-top: -10px;
+  padding-bottom: 8px;
+  font-size: 13px; 
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 8px;
+  text-decoration: line-through;
+}
+
+ion-badge {
+  margin-top: -8px;
+  margin-left: 5px;
+  padding: 8px;
+  float: right;
+  width: 80%;
 }
 
 .qty {
@@ -39,7 +59,7 @@ ion-card {
 }
 
 .plus-minus {
-  margin-top: -25px;
+  margin-top: -8px;
   margin-left: 7px;
 }
 

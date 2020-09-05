@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { map } from "rxjs/operators";
 import { UserData } from 'src/app/api/user-data';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: "app-delivery-order",
@@ -24,16 +25,23 @@ export class DeliveryOrderPage implements OnInit {
   idOutletItem: any;
   dataItem: any;
 
+  nameOutlet: any;
+  carts = [];
+
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private http: HttpClient,
     private userData: UserData,
+    private cartService:CartService
   ) {}
 
   ngOnInit() {
-    this.getOutlet();
     this.getUsername();
     this.getNoTelpUser();
+    this.carts = this.cartService.getCart();
+    console.log(this.carts);
+    this.getChart();
+    
   }
 
   getUsername() {
@@ -49,8 +57,6 @@ export class DeliveryOrderPage implements OnInit {
   }
 
   formDeliveryOrder = {
-    name_customer: this.username,
-    phone_customer: this.no_telp_user,
     address_customer: "",
     additional_message: "",
   };
@@ -59,18 +65,10 @@ export class DeliveryOrderPage implements OnInit {
     return this.http.get("assets/data/keranjang.json");
   }
 
-  getDataOutlet() {
-    return this.load().pipe(
-      map((data: any) => {
-        return data.outlet;
-      })
-    );
-  }
-
-  getOutlet() {
-    this.getDataOutlet().subscribe((outlet: any) => {
-      this.dataOutlet = outlet;
-    });
+  getChart() {
+    for (const item of this.carts) {
+      this.nameOutlet = item['name_outlet']
+    }
   }
 
   submitDeliveryOrder() {
@@ -78,6 +76,8 @@ export class DeliveryOrderPage implements OnInit {
       this.jasttipsDataService.sendMessageForDeliveryOrder(
         // "6287869667004",
         "6287879571222",
+        this.username,
+        this.no_telp_user,
         this.formDeliveryOrder
       )
     );

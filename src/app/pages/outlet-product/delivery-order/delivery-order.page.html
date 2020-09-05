@@ -18,7 +18,7 @@
             <ion-text color="danger">*</ion-text>Nama
           </ion-row>
         </ion-label>
-        <ion-input class="mt-user ion-text-capitalize" [(ngModel)]="formDeliveryOrder.name_customer" [ngModelOptions]="{standalone: true}" type="text" value="{{ username }}" readonly>
+        <ion-input class="mt-user ion-text-capitalize" type="text" value="{{ username }}" disabled>
         </ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">
@@ -27,7 +27,7 @@
             <ion-text color="danger">*</ion-text>Nomor Telp
           </ion-row>
         </ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.phone_customer" [ngModelOptions]="{standalone: true} " type="text" value="{{ no_telp_user }}" readonly>
+        <ion-input type="text" value="{{ no_telp_user }}" disabled>
         </ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">
@@ -47,30 +47,30 @@
     </ion-list>
     <ion-list style="margin-top: -25px">
       <h4 class="ion-padding" style="margin-bottom: -10px">Detail Pesanan</h4>
-      <ion-card *ngFor="let outlet of dataOutlet">
+      <ion-card *ngFor="let cart of carts">
         <ion-card-header color="medium">
-          <ion-card-subtitle style="font-weight: bold;">{{ outlet.name_outlet }}</ion-card-subtitle>
+          <ion-card-subtitle style="font-weight: bold;">{{ cart.name_outlet }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content style="margin-top: 10px;">
           <ion-row>
             <ion-col size="4">
-              <img [src]="outlet.img_item" class="img-pesan-makanan" alt="" />
+              <img [src]="cart.img_path_item" class="img-pesan-makanan" alt="" />
             </ion-col>
             <ion-col size="8">
               <ion-grid>
                 <ion-text color="dark">
                   <div class="title">
-                    {{ outlet.name_item }}
+                    {{ cart.name_item }}
                   </div>
                 </ion-text>
                 <ion-text color="medium">
                   <div class="content">
-                    {{ outlet.qty_item }} Item
+                    {{ cart.qty }} Item
                   </div>
                 </ion-text>
                 <ion-text color="medium">
                   <div class="content">
-                    {{ outlet.price_item | currency:'Rp. ':true:'1.0' }}
+                    {{ cart.total | currency:'Rp. ':true:'1.0' }}
                   </div>
                 </ion-text>
               </ion-grid>

@@ -3,6 +3,7 @@ import { JasttipsDataService } from '../../api/jasttips-data.service';
 import { UserData } from 'src/app/api/user-data';
 import { ModalController } from '@ionic/angular';
 import { AccountPage } from '../account/account.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,15 +20,18 @@ export class DashboardPage implements OnInit {
   idOutlet: any;
   itemPromo: any;
 
+  connection: boolean = true;
+
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private modalCtrl: ModalController,
-    private userData: UserData
+    private userData: UserData,
+    private router: Router
     ) {}
 
   ngOnInit() {
     this.getData();
-    this.getItemPromo();
+    this.getItemListPromo();
     setInterval(() => {
       this.getUsername();
       this.getNoTelpUser();
@@ -47,6 +51,7 @@ export class DashboardPage implements OnInit {
     setTimeout(() => {
       console.log('Async operation has ended');
       this.getData();
+      this.getItemListPromo();
       event.target.complete();
     }, 2000);
   }
@@ -74,13 +79,32 @@ export class DashboardPage implements OnInit {
   getData() {
     this.jasttipsDataService.getListCategory().subscribe((rest) => {
       this.listCategory = rest.category;
+      this.connection = true;
+    }, err => {
+      this.connection = false;
+      console.log(this.connection);
     });
   }
 
-  getItemPromo() {
-    this.jasttipsDataService.getListItem('5').subscribe((items) => {
-      this.itemPromo = items.item;      
-    })
+  getItemListPromo() {
+    this.jasttipsDataService
+      .getListItemPromo()
+      .subscribe((itemPromo) => {
+        this.itemPromo = itemPromo["item_promo"].map((item) => {
+          return {
+            ...item,
+            qty: 0,
+            total: 0,
+            subtotal: 0
+          };
+        });
+      });
+  }
+
+  selectPromo(promo) {
+    this.router.navigate(['/promo-product', {
+      data: JSON.stringify(promo)
+    }])
   }
 
 }

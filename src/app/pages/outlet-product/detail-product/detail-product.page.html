@@ -4,7 +4,10 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ nameOutlet }}</ion-title>
+    <ion-title *ngIf="nameOutlet">{{ nameOutlet }}</ion-title>
+    <ion-title *ngIf="!nameOutlet">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +16,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <img [src]="imgOutlet" class="img-outlet" alt="" />
+  <img *ngIf="imgOutlet" [src]="imgOutlet" class="img-outlet" alt="" />
+  <div *ngIf="!imgOutlet">
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+  </div>
 
   <!-- Toolbar Segment -->
   <ion-item-divider sticky class="ion-no-padding">
@@ -38,8 +44,11 @@
             <ion-row>
               <ion-col size="12">
                 <ion-text color="dark">
-                  <div class="title" style="margin-left: 10px; margin-bottom: 8px;">
+                  <div class="title" *ngIf="item">
                     {{ item.name_item }}
+                  </div>
+                  <div class="title" *ngIf="!item.name_item">
+                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
                   </div>
                 </ion-text>
               </ion-col>
@@ -56,6 +65,9 @@
                         {{item.price_item | currency:'Rp. ':true:'1.0'}}
                       </div>
                     </ng-template>
+                    <div class="price" *ngIf="!item.price_item">
+                      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </div>
                   </ion-text>
                 </ion-row>
                 <ion-row>

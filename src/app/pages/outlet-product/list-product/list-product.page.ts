@@ -27,7 +27,7 @@ export class ListProductPage implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.cart = this.cartService.getChart();
+    this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 

@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { JasttipsDataService } from "../../../api/jasttips-data.service";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { CartService } from "src/app/services/cart.service";
-import { NavController } from '@ionic/angular';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: "app-detail-product",
@@ -22,11 +22,12 @@ export class DetailProductPage implements OnInit {
   imgOutlet: any;
 
   outlets: any[] = [];
-  items: any[] = [];
+  items: any = [];
 
-  cart = [];
+  carts = [];
   cartItemCount: BehaviorSubject<number>;
 
+  qty: any;
   total: any;
   subTotal: any;
 
@@ -35,22 +36,28 @@ export class DetailProductPage implements OnInit {
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private cartService: CartService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
     this.menuSegment = "menuLengkap";
     this.getDataOutlet();
     this.getDataItems();
-    this.cart = this.cartService.getChart();
     this.cartItemCount = this.cartService.getCartItemCount();
+
+    return this.storage.get('qty').then((value) => {
+      console.log(value);
+      
+      return value;
+    });
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+    console.log("Begin async operation");
 
     setTimeout(() => {
-      console.log('Async operation has ended');
+      console.log("Async operation has ended");
       this.getDataOutlet();
       this.getDataItems();
       event.target.complete();
@@ -61,7 +68,6 @@ export class DetailProductPage implements OnInit {
     this.jasttipsDataService
       .getListOutlet(this.productId)
       .subscribe((outlets) => {
-
         this.outlets = outlets["outlet"].map((outlet) => {
           return {
             ...outlet,
@@ -77,7 +83,7 @@ export class DetailProductPage implements OnInit {
             this.subTotal = outlet.sub_total;
           }
         }
-      });    
+      });
   }
 
   getDataItems() {
@@ -88,34 +94,26 @@ export class DetailProductPage implements OnInit {
           return {
             ...item,
             qty: 0,
-            total: 0
+            total: 0,
           };
         });
       });
   }
 
-
-  // Masih Bag
   decrement(item) {
-    if ((item.qty < 1)) {
+    if (item.qty < 1) {
       item.qty = 0;
     } else {
-      item.qty = item.qty - 1;
-      this.total = item.price_item * 1;
-      this.subTotal -= this.total;
-      localStorage.setItem("subTotal", this.subTotal);
-      this.cartItemCount.next(this.cartItemCount.value - 1)
+      item.total = item.price_item * 1;
+      this.subTotal -= item.total;
+      this.cartService.reduceItem(item);
     }
   }
 
   increment(item) {
-    item.qty += 1;
     item.total = item.price_item * 1;
-    console.log(item.qty);
-    
     this.subTotal += item.total;
-    this.cartItemCount.next(this.cartItemCount.value + 1);
+    this.storage.set('qty', item.qty);
+    this.cartService.addItem(item);
   }
-
-  // End Masih Bag
 }

@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="itemPromo.name_outlet">{{ itemPromo.name_outlet }}</ion-title>
+    <ion-title *ngIf="!itemPromo.name_outlet">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <img *ngIf="itemPromo.img_path_outlet" [src]="itemPromo.img_path_outlet" class="img-outlet" alt="" />
+  <div *ngIf="!itemPromo.img_path_outlet">
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+  </div>
+  
+  <ion-card>
+    <ion-row class="item">
+      <ion-col size="5" class="col-img-food">
+        <img [src]="itemPromo.img_path_item" class="img-food" alt="" />
+      </ion-col>
+      <ion-col size="7" class="detail-item">
+        <ion-row>
+          <ion-col size="12">
+            <ion-text color="dark">
+              <div class="title" *ngIf="itemPromo">
+                {{ itemPromo.name_item }}
+              </div>
+              <div class="title" *ngIf="!itemPromo.name_item">
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </div>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-padding">
+          <ion-col size="6">
+            <ion-row>
+              <ion-text color="medium">
+                <div class="price">
+                  {{itemPromo.price_item_promo | currency:'Rp. ':true:'1.0'}}
+                </div>
+              </ion-text>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-badge color="primary" mode="ios">Promo</ion-badge>
+          </ion-col>
+        </ion-row>
+        <!-- Plus Minus -->
+        <ion-row class="plus-minus">
+          <ion-col size="2">
+            <ion-button (click)="decrement(itemPromo)" color="medium" class="ion-button-plus-minus">
+              <b>-</b>
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <div class="qty">{{ itemPromo.qty }}</div>
+          </ion-col>
+          <ion-col size="">
+            <ion-button (click)="increment(itemPromo)" color="primary" class="ion-button-plus-minus">
+              <b>+</b>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <!-- End Plus Minus -->
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col size="6">
+      <h4 class="total">Total</h4>
+    </ion-col>
+    <ion-col size="6">
+      <ion-text color="primary">
+        <h4 class="sub-total" color="primary">
+          {{ itemPromo.subtotal | currency:'Rp. ':true:'1.0'}}
+        </h4>
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-toolbar>
+    <ion-button [routerLink]="['/delivery-order']" expand="block" color="primary" class="btn-keranjang">
+      <img src="assets/icon/basket.png" class="img-keranjang" alt="">
+      <div class="txt-keranjang">Keranjang</div>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -32,7 +32,7 @@ export class JasttipsDataService {
     );
   }
 
-  public sendMessageForDeliveryOrder(phone_admin: string, formDeliveryOrder) {
+  public sendMessageForDeliveryOrder(phone_admin: string, username, noWa, formDeliveryOrder) {
 
     const headerMsg = '*Untuk Pemesanan Item* ';
     const nama = '*Nama :* ';
@@ -61,8 +61,8 @@ export class JasttipsDataService {
       environment.apiSendMessageWA +
       phone_admin + '&text=' +
       headerMsg + enter2x +
-      nama + formDeliveryOrder.name_customer + enter +
-      noTelp + environment.apiSendMessageWA + formDeliveryOrder.phone_customer + enter +
+      nama + username + enter +
+      noTelp + environment.apiSendMessageWA + noWa + enter +
       alamat + formDeliveryOrder.address_customer + enter +
       pesanTambahan + formDeliveryOrder.additional_message + enter2x +
       varCategory + enter2x + 
@@ -83,7 +83,11 @@ export class JasttipsDataService {
     return this.http.get<any>(environment.apiJasttips + 'GetListOutlet/' + id, {});
   }
 
-  public getListItem(detail: string) {
-    return this.http.get<any>(environment.apiJasttips + 'GetListItem/' + detail, {});
+  public getListItem(id: any) {
+    return this.http.get<any>(environment.apiJasttips + 'GetListItem/' + id, {});
+  }
+
+  public getListItemPromo() {
+    return this.http.get<any>(environment.apiJasttips + 'GetListItemPromo', {});
   }
 }

@@ -33,6 +33,8 @@ export class DashboardPage implements OnInit {
     this.getData();
     this.getItemListPromo();
     setInterval(() => {
+      this.getData();
+      this.getItemListPromo();
       this.getUsername();
       this.getNoTelpUser();
     }, 1000)

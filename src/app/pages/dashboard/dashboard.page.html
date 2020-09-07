@@ -1,17 +1,13 @@
 <ion-content *ngIf="connection == false">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  
   <div class="no-internet">
     <img src="assets/img/no-internet/undraw_Notify_re_65on.svg" alt="" />
     <ion-text color="danger">
       <h1 class="ion-text-center oops">Oops</h1>
       <h1 class="ion-text-center txt-warning">Harap Sambungkan Internet!</h1>
     </ion-text>
-    <ion-button (click)="doRefresh($event)" color="danger" class="ion-padding" expand="block" shape="round">
-      Coba Lagi
-    </ion-button>
+    <div class="ion-padding">
+      <ion-progress-bar color="danger" reversed={true} type="indeterminate" reversed="true"></ion-progress-bar>
+    </div>
   </div>
 </ion-content>
 

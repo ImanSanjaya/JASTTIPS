@@ -6,9 +6,8 @@ import { Storage } from '@ionic/storage';
   providedIn: 'root'
 })
 export class UserData {
-  favorites: string[] = [];
+  
   HAS_LOGGED_IN = 'hasLoggedIn';
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
   constructor(
     public storage: Storage

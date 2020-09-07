@@ -6,7 +6,6 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { map } from "rxjs/operators";
 import { UserData } from 'src/app/api/user-data';
-import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: "app-delivery-order",
@@ -31,16 +30,15 @@ export class DeliveryOrderPage implements OnInit {
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private http: HttpClient,
-    private userData: UserData,
-    private cartService:CartService
+    private userData: UserData
   ) {}
 
   ngOnInit() {
     this.getUsername();
     this.getNoTelpUser();
-    this.carts = this.cartService.getCart();
-    console.log(this.carts);
-    this.getChart();
+    this.carts = JSON.parse(localStorage.getItem('pushItem'));
+    
+    console.log(this.carts)
     
   }
 
@@ -61,15 +59,6 @@ export class DeliveryOrderPage implements OnInit {
     additional_message: "",
   };
 
-  load(): any {
-    return this.http.get("assets/data/keranjang.json");
-  }
-
-  getChart() {
-    for (const item of this.carts) {
-      this.nameOutlet = item['name_outlet']
-    }
-  }
 
   submitDeliveryOrder() {
     open(

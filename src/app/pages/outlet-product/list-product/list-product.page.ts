@@ -29,6 +29,12 @@ export class ListProductPage implements OnInit {
     this.getData();
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
+
+    let jsonParse = JSON.parse(localStorage.getItem('pushItem'));
+
+    console.log(jsonParse);
+    
+
   }
 
   doRefresh(event) {

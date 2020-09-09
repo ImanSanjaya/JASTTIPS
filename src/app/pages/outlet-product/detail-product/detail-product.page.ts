@@ -5,7 +5,6 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CartService } from "src/app/services/cart.service";
 import { Storage } from "@ionic/storage";
-import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
 
 @Component({
   selector: "app-detail-product",
@@ -13,25 +12,25 @@ import { SSL_OP_COOKIE_EXCHANGE } from 'constants';
   styleUrls: ["./detail-product.page.scss"],
 })
 export class DetailProductPage implements OnInit {
-  productId = this.route.snapshot.paramMap.get("productId");
   detailProductId = this.route.snapshot.paramMap.get("detailProductId");
-
-  idOutlet: any;
-  idItem: any;
 
   nameOutlet: any;
   imgOutlet: any;
 
-  outlets: any[] = [];
+  idItem: any;
+
   items: any = [];
 
-  carts = [];
+  carts: any = [];
   cartsTmp = [];
   cartItemCount: BehaviorSubject<number>;
 
   qty: any;
-  total: any;
+  getQty: any;
+  getQtys: any;
   subTotal: any;
+
+  saveItems: any[] = [];
 
   menuSegment: string;
 
@@ -45,14 +44,8 @@ export class DetailProductPage implements OnInit {
 
   ngOnInit() {
     this.menuSegment = "menuLengkap";
-    this.getDataOutlet();
-    this.getDataItems();
+    this.loadData();
     this.cartItemCount = this.cartService.getCartItemCount();
-
-    // setInterval(() => {
-    //   console.log(this.items);
-      
-    // }, 1000)
   }
 
   doRefresh(event) {
@@ -60,35 +53,12 @@ export class DetailProductPage implements OnInit {
 
     setTimeout(() => {
       console.log("Async operation has ended");
-      this.getDataOutlet();
-      this.getDataItems();
+      this.loadData();
       event.target.complete();
     }, 2000);
   }
 
-  getDataOutlet() {
-    this.jasttipsDataService
-      .getListOutlet(this.productId)
-      .subscribe((outlets) => {
-        this.outlets = outlets["outlet"].map((outlet) => {
-          return {
-            ...outlet,
-            sub_total: 0,
-          };
-        });
-
-        for (const outlet of this.outlets) {
-          if (outlet.id_outlet == this.detailProductId) {
-            this.idOutlet = outlet.id_outlet;
-            this.nameOutlet = outlet.name_outlet;
-            this.imgOutlet = outlet.img_path_outlet;
-            this.subTotal = outlet.sub_total;
-          }
-        }
-      });
-  }
-
-  getDataItems() {
+  loadData() {
     this.jasttipsDataService
       .getListItem(this.detailProductId)
       .subscribe((items) => {
@@ -97,9 +67,21 @@ export class DetailProductPage implements OnInit {
             ...item,
             qty: 0,
             total: 0,
+            subtotal: 0,
           };
         });
+
+        for (let item of this.items) {
+          this.nameOutlet = item["name_outlet"];
+          this.imgOutlet = item["img_path_outlet"];
+          this.subTotal = item["subtotal"];
+        }
       });
+  }
+
+  increment(item) {
+    this.cartService.addItem(item);
+    this.subTotal = item.total
   }
 
   decrement(item) {
@@ -112,54 +94,9 @@ export class DetailProductPage implements OnInit {
     }
   }
 
-  increment(item) {
-    item.total = item.price_item * 1;
-    this.subTotal += item.total;
-    this.storage.set('qty', item.qty);
-    this.cartService.addItem(item);
-
-    let ony : boolean = false;
-    let valueIndex = null;
-
-    function myFunctionIncrement(items, index) {
-      if(item.id_item === items.id_item){
-        ony = true;
-      }
-      valueIndex = index;
-      //console.log(index + ":" + JSON.stringify(items)); 
-    }
-
-    this.carts.forEach(myFunctionIncrement);
-    
-    if(ony){
-      this.carts.splice(valueIndex, 1, item);
-      console.log(this.carts); 
-    }else{
-      this.carts.push(item);
-      console.log(this.carts);  
-    }
-      
-    
-  }
-
   setCart() {
-    let TotalItem : any;
-    if(localStorage.getItem('pushItem')){
-      TotalItem = JSON.parse(localStorage.getItem('pushItem'));
-      
-      function myFunctionSetCart(items, index) {
-        TotalItem.push(items);
-      }
+    // console.log(this.cartService.getCart());
 
-      this.carts.forEach(myFunctionSetCart);
-      localStorage.setItem('pushItem', JSON.stringify(TotalItem));
-      console.log('tambah ada'); 
-    }else{
-      localStorage.setItem('pushItem', JSON.stringify(this.carts));
-      console.log('belum ada'); 
-    }
-
-    this.router.navigateByUrl('/delivery-order');
-
+    this.router.navigateByUrl("/delivery-order");
   }
 }

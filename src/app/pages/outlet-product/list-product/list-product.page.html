@@ -22,16 +22,32 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngFor="let product of listProduct" class="ion-no-padding">
-    <ion-card routerLink="/list-product/{{ productId }}/detail-product/{{ product.id_outlet }}"
-      routerLinkActive="router-link-active">
-      <img [src]="product.img_path_outlet" class="img-outlet" alt="">
+  <ion-grid *ngIf="!listProduct" class="ion-no-padding">
+    <ion-card *ngFor="let item of [0,1,2,3]">
+      <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
       <ion-card-content>
-        <h4>{{ product.name_outlet }}</h4>
-        <h6>{{ product.address_outlet }}</h6>
+        <h4>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h4>
+        <h6>
+          <ion-skeleton-text animated style="width: 70%; margin-top: 10px;"></ion-skeleton-text>
+        </h6>
       </ion-card-content>
     </ion-card>
   </ion-grid>
+
+  <div *ngIf="listProduct">
+    <ion-grid *ngFor="let product of listProduct" class="ion-no-padding">
+      <ion-card routerLink="/list-product/{{ productId }}/detail-product/{{ product.id_outlet }}"
+        routerLinkActive="router-link-active">
+        <img [src]="product.img_path_outlet" class="img-outlet" alt="">
+        <ion-card-content>
+          <h4>{{ product.name_outlet }}</h4>
+          <h6>{{ product.address_outlet }}</h6>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['/delivery-order']">

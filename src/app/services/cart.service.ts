@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { JasttipsDataService } from '../api/jasttips-data.service';
-import { ActivatedRoute } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { JasttipsDataService } from "../api/jasttips-data.service";
+import { ActivatedRoute } from "@angular/router";
+import { Storage } from "@ionic/storage";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CartService {
   private qty: any;
@@ -17,7 +17,7 @@ export class CartService {
     private jasttipsDataService: JasttipsDataService,
     private route: ActivatedRoute,
     private storage: Storage
-  ) { }
+  ) {}
 
   getCart() {
     return this.cart;
@@ -36,7 +36,7 @@ export class CartService {
         }
       }
     }
-    this.cartItemCount.next(this.cartItemCount.value - 1)
+    this.cartItemCount.next(this.cartItemCount.value - 1);
   }
 
   addItem(item) {
@@ -44,19 +44,21 @@ export class CartService {
     for (const c of this.cart) {
       if (c.id_item === item.id_item) {
         item.qty += 1;
-        item.total = item.price_item * item.qty
-        added = true
-        this.storage.set('qty', item.qty);
-        break
+        item.total = item.price_item * item.qty;
+        added = true;
+        break;
       }
     }
-    
+
     if (!added) {
       item.qty = 1;
-      item.total
-      this.cart.push(item)
+      item.total = item.price_item * item.qty;
+      this.cart.push(item);
+      // localStorage.setItem('pushItem', this.cart)
     }
-    this.cartItemCount.next(this.cartItemCount.value + 1)
-  }
 
+    console.log(this.cart);
+
+    this.cartItemCount.next(this.cartItemCount.value + 1);
+  }
 }

@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { map } from "rxjs/operators";
 import { UserData } from 'src/app/api/user-data';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: "app-delivery-order",
@@ -30,13 +31,14 @@ export class DeliveryOrderPage implements OnInit {
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private http: HttpClient,
-    private userData: UserData
+    private userData: UserData,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
     this.getUsername();
     this.getNoTelpUser();
-    this.carts = JSON.parse(localStorage.getItem('pushItem'));
+    this.carts = this.cartService.getCart()
     
     console.log(this.carts)
     

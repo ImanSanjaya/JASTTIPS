@@ -47,9 +47,9 @@
     </ion-list>
     <ion-list style="margin-top: -25px">
       <h4 class="ion-padding" style="margin-bottom: -10px">Detail Pesanan</h4>
-      <!-- <ion-card *ngFor="let cart of carts">
+      <ion-card *ngFor="let cart of carts">
         <ion-card-header color="medium">
-          <ion-card-subtitle style="font-weight: bold;">{{ cart.name_outlet }}</ion-card-subtitle>
+          <ion-card-subtitle style="font-weight: bold;" *ngIf="cart.name_outlet == cart.name_outlet">{{ cart.name_outlet }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content style="margin-top: 10px;">
           <ion-row>
@@ -77,7 +77,7 @@
             </ion-col>
           </ion-row>
         </ion-card-content>
-      </ion-card> -->
+      </ion-card>
     </ion-list>
   </form>
 </ion-content>

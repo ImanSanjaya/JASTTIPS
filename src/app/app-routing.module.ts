@@ -67,7 +67,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
   {
-    path: 'promo-product',
+    path: 'promo-product/:promoItemId',
     loadChildren: () => import('./pages/outlet-product/promo-product/promo-product.module').then( m => m.PromoProductPageModule)
   },
 

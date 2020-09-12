@@ -1,5 +1,5 @@
 .no-internet {
-  margin-top: 40%;
+  margin-top: 25%;
 
   .oops {
     font-weight: bold;
@@ -18,97 +18,96 @@
   font-size: 23px;
   background: var(--ion-color-primary);
   box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.1), 0 6px 20px 0 rgb(0, 0, 0, 0.10);
+  
+  .mt {
+    margin-top: 100px;
+  }
 }
 
-.mt {
-  margin-top: 100px;
-}
 
 ion-grid {
   margin-top: 10px;
   margin-bottom: 10px;
-}
 
-.img-category {
-  width: 100%;
-  height: 100%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+  h3 {
+    color: var(--ion-color-dark);
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-h3 {
-  color: var(--ion-color-dark);
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  .card-user {
+    padding-left: 10px;
+  }
 
-.card-user {
-  padding-left: 10px;
-}
+  .icon-user {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+  }
 
-.icon-user {
-  margin-top: 10px;
-  width: 25px;
-  height: 25px;
-}
+  .img-category {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.phone-user {
-  margin-top: -15px;
-}
+  .phone-user {
+    margin-top: -15px;
+  }
 
-.mt-user {
-  margin-left: 5px;
-}
+  .mt-user {
+    margin-left: 5px;
+  }
+  
+  .edit-profile {
+    margin-top: 15px;
+    a {
+      float: right;
+      margin-right: 8px;
+    }
+  }
 
-.edit-profile {
-  margin-top: 15px;
-}
+  .category {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: -15px;
+    margin-left: 5px;
+    margin-bottom: -5px;
+  }
 
-.edit-profile a {
-  float: right;
-  margin-right: 8px;
-}
+  .card-promo {
+    border-radius: 10px;
+  }
 
-.category {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: -15px;
-  margin-left: 5px;
-  margin-bottom: -5px;
-}
-
-.promo {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.card-promo {
-  border-radius: 10px;
-}
-
-ion-slides {
-  text-align: center;
-  --bullet-background: var(--ion-color-light);
-  --bullet-background-active: var(--ion-color-light);
-}
-
-ion-slides img {
-  width: 100%;
-  height: auto;
-  // margin-top: 25px;
-  margin-bottom: 30px;
+  ion-slides {
+    text-align: center;
+    --bullet-background: var(--ion-color-light);
+    --bullet-background-active: var(--ion-color-light);
+    img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+    }
+  }
 }
 
 ion-toolbar {
   --background: transparent;
   --ion-color-base: transparent !important;
   --border-style: none;
+  margin-top: -20px;
+
+  img {
+    margin-bottom: -5px;
+  }
+
+  .footer {
+    background-color:#33cc33;
+    margin: none;
+    height: 15px;
+    margin-bottom: -10px;
+  }
 }
 
-.footer {
-  background-color:#33cc33;
-  margin: none;
-  height: 15px;
-  margin-bottom: -10px;
-}

@@ -1,24 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { JasttipsDataService } from '../../api/jasttips-data.service';
-import { UserData } from 'src/app/api/user-data';
-import { ModalController } from '@ionic/angular';
-import { AccountPage } from '../account/account.page';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { JasttipsDataService } from "../../api/jasttips-data.service";
+import { UserData } from "src/app/api/user-data";
+import { ModalController } from "@ionic/angular";
+import { AccountPage } from "../account/account.page";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.page.html",
+  styleUrls: ["./dashboard.page.scss"],
 })
 export class DashboardPage implements OnInit {
-
   username: string;
   no_telp_user: string;
 
-  listCategory: any;
+  categories: any;
 
-  idOutlet: any;
-  itemPromo: any;
+  promoItems: any;
 
   connection: boolean = true;
 
@@ -27,17 +25,15 @@ export class DashboardPage implements OnInit {
     private modalCtrl: ModalController,
     private userData: UserData,
     private router: Router
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.getData();
     this.getItemListPromo();
     setInterval(() => {
-      this.getData();
-      this.getItemListPromo();
       this.getUsername();
       this.getNoTelpUser();
-    }, 1000)
+    }, 1000);
   }
 
   slideOptsOne = {
@@ -48,10 +44,7 @@ export class DashboardPage implements OnInit {
   };
 
   doRefresh(event) {
-    console.log('Begin async operation');
-
     setTimeout(() => {
-      console.log('Async operation has ended');
       this.getData();
       this.getItemListPromo();
       event.target.complete();
@@ -73,40 +66,43 @@ export class DashboardPage implements OnInit {
   async account() {
     let modal = await this.modalCtrl.create({
       component: AccountPage,
-      cssClass: 'account-modal'
+      cssClass: "account-modal",
     });
     modal.present();
   }
 
   getData() {
-    this.jasttipsDataService.getListCategory().subscribe((rest) => {
-      this.listCategory = rest.category;
-      this.connection = true;
-    }, err => {
-      this.connection = false;
-      console.log(this.connection);
-    });
+    this.jasttipsDataService.getListCategory().subscribe(
+      (data) => {
+        this.categories = data.category;
+        this.connection = true;
+      },
+      (err) => {
+        this.connection = false;
+        console.log(this.connection);
+      }
+    );
   }
 
   getItemListPromo() {
-    this.jasttipsDataService
-      .getListItemPromo()
-      .subscribe((itemPromo) => {
-        this.itemPromo = itemPromo["item_promo"].map((item) => {
-          return {
-            ...item,
-            qty: 0,
-            total: 0,
-            subtotal: 0
-          };
-        });
+    this.jasttipsDataService.getListItemPromo().subscribe((data) => {
+      this.promoItems = data["item_promo"].map((item) => {
+        return {
+          ...item,
+          qty: 0,
+          total: 0,
+          subtotal: 0,
+        };
       });
+    });
   }
 
-  selectPromo(promo) {
-    this.router.navigate(['/promo-product', {
-      data: JSON.stringify(promo)
-    }])
-  }
+  selectPromoItem(item) {
+    if (localStorage.getItem('promo-item-' + item.id_item)) {
+    } else {
+      localStorage.setItem('promo-item-' + item.id_item, JSON.stringify(item))
+    }
 
+    this.router.navigateByUrl('/promo-product/' + item.id_item)
+  }
 }

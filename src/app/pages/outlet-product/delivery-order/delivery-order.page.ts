@@ -18,15 +18,12 @@ export class DeliveryOrderPage implements OnInit {
 
   username: string;
   no_telp_user: string;
+  
+  nameOutlets: any;
+  cartItems: any;
 
-  idOutlet: any;
-  dataOutlet: any;
-
-  idOutletItem: any;
-  dataItem: any;
-
-  nameOutlet: any;
-  carts = [];
+  totalItem: any;
+  total: any;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -38,10 +35,19 @@ export class DeliveryOrderPage implements OnInit {
   ngOnInit() {
     this.getUsername();
     this.getNoTelpUser();
-    this.carts = this.cartService.getCart()
-    
-    console.log(this.carts)
-    
+    this.getCartItem();
+  }
+
+  getCartItem() {
+
+    this.cartItems = JSON.parse(localStorage.getItem('cart-item'))
+    if (this.cartItems) {
+      this.nameOutlets = [...new Set(this.cartItems.map(data => data.name_outlet))]
+      let subTotal = this.cartItems.map(data => data.sub_total)
+      this.totalItem = subTotal.reduce((a,b)=>{return a + b},0)
+    }
+      
+    this.total = this.totalItem > 0 ? this.totalItem : 0
   }
 
   getUsername() {

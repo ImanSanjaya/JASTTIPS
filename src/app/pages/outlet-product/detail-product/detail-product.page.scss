@@ -44,7 +44,7 @@ ion-card {
   text-decoration: line-through;
 }
 
-ion-badge {
+.badge-promo {
   margin-top: -8px;
   margin-left: 5px;
   padding: 8px;
@@ -52,30 +52,36 @@ ion-badge {
   width: 80%;
 }
 
-.qty {
-  margin-top: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-  padding-left: 15px;
-}
-
 .plus-minus {
-  margin-top: -8px;
+  margin-top: 5px;
   margin-left: 7px;
+  display: flex;
+
+  div {
+    -ms-flex: 1;
+    flex: 1;
+  }
+
+  ion-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .qty {
+    margin-top: 4px;
+    margin-left: 8px;
+    margin-right: 8px;
+    height: 31px;
+    padding: 10px;
+  }
 }
 
-.ion-button-plus-minus {
-  width: 30px;
-  height: 30px;
-}
-
-.total {
+.txt-total {
   padding-left: 10px;
   margin-bottom: -5px;
 }
 
-.sub-total {
+.total {
   padding-left: 10px;
   margin-bottom: -5px;
   float: right;

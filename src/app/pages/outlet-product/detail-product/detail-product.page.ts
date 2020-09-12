@@ -14,23 +14,19 @@ import { Storage } from "@ionic/storage";
 export class DetailProductPage implements OnInit {
   detailProductId = this.route.snapshot.paramMap.get("detailProductId");
 
+  items: any;
+
   nameOutlet: any;
   imgOutlet: any;
 
-  idItem: any;
+  nameItem: any;
 
-  items: any = [];
+  getStoragePromo: any;
 
-  carts: any = [];
-  cartsTmp = [];
   cartItemCount: BehaviorSubject<number>;
 
-  qty: any;
-  getQty: any;
-  getQtys: any;
-  subTotal: any;
-
-  saveItems: any[] = [];
+  totalItem: any;
+  total: any;
 
   menuSegment: string;
 
@@ -45,7 +41,11 @@ export class DetailProductPage implements OnInit {
   ngOnInit() {
     this.menuSegment = "menuLengkap";
     this.loadData();
-    this.cartItemCount = this.cartService.getCartItemCount();
+    this.loadGetData();
+
+    setInterval(() => {
+      this.loadGetData()
+    }, 500)
   }
 
   doRefresh(event) {
@@ -61,42 +61,85 @@ export class DetailProductPage implements OnInit {
   loadData() {
     this.jasttipsDataService
       .getListItem(this.detailProductId)
-      .subscribe((items) => {
-        this.items = items["item"].map((item) => {
-          return {
-            ...item,
-            qty: 0,
-            total: 0,
-            subtotal: 0,
-          };
-        });
+      .subscribe((data) => {
+        
+        let getStorage = JSON.parse(localStorage.getItem('outlet-'+ this.detailProductId))
 
-        for (let item of this.items) {
+        this.items = data["item"].map((item) => {
+          
           this.nameOutlet = item["name_outlet"];
           this.imgOutlet = item["img_path_outlet"];
-          this.subTotal = item["subtotal"];
-        }
+
+          let itemsFilter = getStorage.filter(id => id.id_item === item.id_item)
+
+          if (item.status_promo == "1") {
+            this.nameItem = item.name_item.replace(/\s/g, "-").toLowerCase()
+            this.getStoragePromo = JSON.parse(localStorage.getItem(this.nameItem))
+          }
+
+          return {
+            ...item,
+            qty: itemsFilter[0].qty,
+            sub_total: itemsFilter[0].sub_total
+          };
+          
+        });
       });
   }
 
+  loadGetData() {
+    if (localStorage.getItem('outlet-'+ this.detailProductId)){
+      let getStorage = JSON.parse(localStorage.getItem('outlet-' + this.detailProductId))
+
+      let subTotal = getStorage.map(data => data.sub_total)
+      this.totalItem = subTotal.reduce((a,b)=>{return a + b},0)
+    }
+    this.total = this.totalItem > 0 ? this.totalItem : 0
+  }
+
   increment(item) {
+    let added = false;
+
+    this.items.map((data) => {
+      if (data.id_item === item.id_item) {
+        item.qty += 1
+
+        if (item.status_promo == '1') {
+          item.sub_total = item.price_item_promo * item.qty
+        } else {
+          item.sub_total = item.price_item * item.qty
+        }
+      }
+      added = true
+    })
+    localStorage.setItem('outlet-' + this.detailProductId, JSON.stringify(this.items))
     this.cartService.addItem(item);
-    this.subTotal = item.total
   }
 
   decrement(item) {
+    let added = false;
+
     if (item.qty < 1) {
       item.qty = 0;
     } else {
-      item.total = item.price_item * 1;
-      this.subTotal -= item.total;
+      this.items.map((data) => {
+        if (data.id_item === item.id_item) {
+          item.qty -= 1
+  
+          if (item.status_promo == '1') {
+            item.sub_total = item.price_item_promo * item.qty
+          } else {
+            item.sub_total = item.price_item * item.qty
+          }
+        }
+        added = true
+      })
+      localStorage.setItem('outlet-' + this.detailProductId, JSON.stringify(this.items))
       this.cartService.reduceItem(item);
     }
   }
 
   setCart() {
-    // console.log(this.cartService.getCart());
-
     this.router.navigateByUrl("/delivery-order");
   }
 }

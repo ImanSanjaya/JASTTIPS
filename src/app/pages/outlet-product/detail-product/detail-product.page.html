@@ -21,7 +21,6 @@
     <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
   </div>
 
-  <!-- Toolbar Segment -->
   <ion-item-divider sticky class="ion-no-padding">
     <ion-toolbar>
       <ion-segment [(ngModel)]="menuSegment" value="menuLengkap">
@@ -29,9 +28,8 @@
       </ion-segment>
     </ion-toolbar>
   </ion-item-divider>
-  <!-- End Toolbar Segment -->
 
-  <!-- Skeleton -->
+  <!-- Skeleton No Item-->
   <div *ngIf="!items">
     <ion-card *ngFor="let item of [0,1,2,3,4]">
       <ion-row>
@@ -57,7 +55,7 @@
       </ion-row>
     </ion-card>
   </div>
-  <!-- End Skeleton -->
+  <!-- End Skeleton No Item-->
 
   <!-- Item -->
   <ion-card *ngFor="let item of items">
@@ -104,26 +102,26 @@
             </ion-row>
           </ion-col>
           <ion-col size="6" *ngIf="item.status_promo == '1'">
-            <ion-badge color="primary" mode="ios">Promo</ion-badge>
+            <ion-badge class="badge-promo" color="primary" mode="ios">Promo</ion-badge>
           </ion-col>
         </ion-row>
 
-        <ion-row class="plus-minus">
-          <ion-col size="2">
-            <ion-button (click)="decrement(item)" color="medium" class="ion-button-plus-minus">
-              <b>-</b>
-            </ion-button>
-          </ion-col>
-          <ion-col size="3">
-            <div class="qty">{{ item.qty }}</div>
-          </ion-col>
-          <ion-col size="">
-            <ion-button (click)="increment(item)" color="primary" class="ion-button-plus-minus">
-              <b>+</b>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
+        <div class="plus-minus">
+          <ion-button (click)="decrement(item)" color="danger" expand="block" class="decrement">
+            <b>-</b>
+          </ion-button>
+          <ion-badge color="light" class="qty">
+            <ion-text color="dark" *ngIf="item.qty == 0">
+              {{ item.qty }}
+            </ion-text>
+            <ion-text color="primary" *ngIf="item.qty > 0">
+              {{ item.qty }}
+            </ion-text>
+          </ion-badge>
+          <ion-button (click)="increment(item)" color="primary" expand="block" class="decrement">
+            <b>+</b>
+          </ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-card>
@@ -134,12 +132,12 @@
 <ion-footer>
   <ion-row>
     <ion-col size="6">
-      <h4 class="total">Total</h4>
+      <h4 class="txt-total">Total</h4>
     </ion-col>
     <ion-col size="6">
       <ion-text color="primary">
-        <h4 class="sub-total" color="primary">
-          {{subTotal | currency:'Rp. ':true:'1.0'}}
+        <h4 class="total" color="primary">
+          {{ total | currency:'Rp. ':true:'1.0'}}
         </h4>
       </ion-text>
     </ion-col>

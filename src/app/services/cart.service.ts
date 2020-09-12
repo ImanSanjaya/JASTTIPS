@@ -11,7 +11,7 @@ export class CartService {
   private qty: any;
 
   private cart = [];
-  private cartItemCount = new BehaviorSubject(0);
+  private cartItemCount: any = 0;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -30,35 +30,33 @@ export class CartService {
   reduceItem(item) {
     for (let [index, c] of this.cart.entries()) {
       if (c.id === item.id) {
-        c.qty -= 1;
         if (c.qty == 0) {
           this.cart.splice(index, 1);
         }
       }
     }
-    this.cartItemCount.next(this.cartItemCount.value - 1);
+
+    localStorage.setItem('cart-item', JSON.stringify(this.cart))
+    let cartItemCount = String(this.cartItemCount -= 1)
+    localStorage.setItem('cartItemCount', cartItemCount)
   }
 
   addItem(item) {
+    
     let added = false;
-    for (const c of this.cart) {
-      if (c.id_item === item.id_item) {
-        item.qty += 1;
-        item.total = item.price_item * item.qty;
-        added = true;
-        break;
+
+    this.cart.map(data => {
+      if (data.id_item === item.id_item) {
+        added = true
       }
-    }
+    })
 
     if (!added) {
-      item.qty = 1;
-      item.total = item.price_item * item.qty;
-      this.cart.push(item);
-      // localStorage.setItem('pushItem', this.cart)
+      item.qty = 1
+      this.cart.push(item)
     }
-
-    console.log(this.cart);
-
-    this.cartItemCount.next(this.cartItemCount.value + 1);
+    
+    localStorage.setItem('cart-item', JSON.stringify(this.cart))
+    localStorage.setItem('cartItemCount', this.cartItemCount += 1)
   }
 }

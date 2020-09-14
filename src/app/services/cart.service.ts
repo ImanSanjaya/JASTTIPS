@@ -7,42 +7,17 @@ import { Storage } from "@ionic/storage";
 @Injectable({
   providedIn: "root",
 })
-export class CartService {
-  private qty: any;
+export class CartService {  
 
-  private cart = [];
-  private cartItemCount: any = 0;
+  cart: any[] = [];
 
-  constructor(
-    private jasttipsDataService: JasttipsDataService,
-    private route: ActivatedRoute,
-    private storage: Storage
-  ) {}
+  itemInCart = [];
 
-  getCart() {
-    return this.cart;
-  }
+  cartItemCount: any = 0;
 
-  getCartItemCount() {
-    return this.cartItemCount;
-  }
-
-  reduceItem(item) {
-    for (let [index, c] of this.cart.entries()) {
-      if (c.id === item.id) {
-        if (c.qty == 0) {
-          this.cart.splice(index, 1);
-        }
-      }
-    }
-
-    localStorage.setItem('cart-item', JSON.stringify(this.cart))
-    let cartItemCount = String(this.cartItemCount -= 1)
-    localStorage.setItem('cartItemCount', cartItemCount)
-  }
+  constructor() {}
 
   addItem(item) {
-    
     let added = false;
 
     this.cart.map(data => {
@@ -56,7 +31,22 @@ export class CartService {
       this.cart.push(item)
     }
     
-    localStorage.setItem('cart-item', JSON.stringify(this.cart))
+    localStorage.setItem('cart-items', JSON.stringify(this.cart))
     localStorage.setItem('cartItemCount', this.cartItemCount += 1)
+
+  }
+
+  reduceItem(item) {
+    for (let [index, c] of this.cart.entries()) {
+      if (c.id === item.id) {
+        if (c.qty == 0) {
+          this.cart.splice(index, 1);
+        }
+      }
+    }
+
+    localStorage.setItem('cart-items', JSON.stringify(this.cart))
+    let cartItemCount = String(this.cartItemCount -= 1)
+    localStorage.setItem('cartItemCount', cartItemCount)
   }
 }

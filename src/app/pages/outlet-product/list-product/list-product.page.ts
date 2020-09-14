@@ -8,15 +8,11 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
   styleUrls: ["./list-product.page.scss"],
 })
 export class ListProductPage implements OnInit {
+
   productId = this.route.snapshot.paramMap.get("productId");
-
-  nameCategory: any;
-
+  
+  category: any;
   products: any;
-
-  items: any;
-
-  itemCount: any;
   cartItemCount: any;
 
   constructor(
@@ -43,11 +39,12 @@ export class ListProductPage implements OnInit {
     this.jasttipsService.getListCategory().subscribe((rest) => {
       rest["category"].map((data) => {
         if (data.id_category_outlet === this.productId) {
-          this.nameCategory = data.name_category_outlet;
+          this.category = data;
+          
           this.jasttipsService
             .getListOutlet(data.id_category_outlet)
-            .subscribe((restOutlet) => {
-              this.products = restOutlet["outlet"];
+            .subscribe((rest) => {
+              this.products = rest["outlet"];
             });
         }
       });
@@ -55,8 +52,10 @@ export class ListProductPage implements OnInit {
   }
 
   getItemCount() {
-    this.itemCount = localStorage.getItem("cartItemCount");
-    this.cartItemCount = this.itemCount > 0 ? this.itemCount : 0;
+    let itemCount;
+
+    itemCount = localStorage.getItem("cartItemCount");
+    this.cartItemCount = itemCount > 0 ? itemCount : 0;
   }
 
   filterData(ev: any) {
@@ -67,9 +66,8 @@ export class ListProductPage implements OnInit {
           if (data.id_category_outlet) {
             this.jasttipsService
               .getListOutlet(data.id_category_outlet)
-              .subscribe((restListOutlet) => {
-                this.nameCategory = data.name_category_outlet;
-                this.products = restListOutlet.outlet;
+              .subscribe((rest) => {
+                this.products = rest.outlet;
 
                 if (val && val.trim() != "") {
                   this.products = this.products.filter((dataItems) => {
@@ -91,7 +89,8 @@ export class ListProductPage implements OnInit {
     this.jasttipsService
       .getListItem(product.id_outlet)
       .subscribe((data) => {
-        this.items = data["item"].map((item) => {
+
+        let items = data["item"].map((item) => {
           return {
             ...item,
             qty: 0,
@@ -100,12 +99,9 @@ export class ListProductPage implements OnInit {
         });
 
         if (localStorage.getItem("outlet-" + product.id_outlet)) {
-          console.log("data sudah ada");
+          
         } else {
-          localStorage.setItem(
-            "outlet-" + product.id_outlet,
-            JSON.stringify(this.items)
-          );
+          localStorage.setItem("outlet-" + product.id_outlet, JSON.stringify(items));
         }
       });
 

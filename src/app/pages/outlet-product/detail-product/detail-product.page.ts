@@ -12,30 +12,17 @@ import { Storage } from "@ionic/storage";
   styleUrls: ["./detail-product.page.scss"],
 })
 export class DetailProductPage implements OnInit {
+
   detailProductId = this.route.snapshot.paramMap.get("detailProductId");
-
   items: any;
-
-  nameOutlet: any;
-  imgOutlet: any;
-
-  nameItem: any;
-
-  getStoragePromo: any;
-
-  cartItemCount: BehaviorSubject<number>;
-
-  totalItem: any;
   total: any;
-
   menuSegment: string;
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private router: Router,
-    private storage: Storage
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -66,16 +53,8 @@ export class DetailProductPage implements OnInit {
         let getStorage = JSON.parse(localStorage.getItem('outlet-'+ this.detailProductId))
 
         this.items = data["item"].map((item) => {
-          
-          this.nameOutlet = item["name_outlet"];
-          this.imgOutlet = item["img_path_outlet"];
 
-          let itemsFilter = getStorage.filter(id => id.id_item === item.id_item)
-
-          if (item.status_promo == "1") {
-            this.nameItem = item.name_item.replace(/\s/g, "-").toLowerCase()
-            this.getStoragePromo = JSON.parse(localStorage.getItem(this.nameItem))
-          }
+          let itemsFilter = getStorage.filter(data => data.id_item === item.id_item)
 
           return {
             ...item,
@@ -88,13 +67,14 @@ export class DetailProductPage implements OnInit {
   }
 
   loadGetData() {
+    let totalItem;
+
     if (localStorage.getItem('outlet-'+ this.detailProductId)){
       let getStorage = JSON.parse(localStorage.getItem('outlet-' + this.detailProductId))
-
       let subTotal = getStorage.map(data => data.sub_total)
-      this.totalItem = subTotal.reduce((a,b)=>{return a + b},0)
+      totalItem = subTotal.reduce((a,b)=>{return a + b},0)
     }
-    this.total = this.totalItem > 0 ? this.totalItem : 0
+    this.total = totalItem > 0 ? totalItem : 0
   }
 
   increment(item) {

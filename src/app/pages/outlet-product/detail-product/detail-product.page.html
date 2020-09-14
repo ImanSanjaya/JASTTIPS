@@ -4,8 +4,8 @@
       <ion-back-button [text]="buttonText" [icon]="buttonIcon">
       </ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="nameOutlet">{{ nameOutlet }}</ion-title>
-    <ion-title *ngIf="!nameOutlet">
+    <ion-title *ngIf="items">{{ items[0].name_outlet }}</ion-title>
+    <ion-title *ngIf="!items">
       <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
     </ion-title>
   </ion-toolbar>
@@ -16,8 +16,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <img *ngIf="imgOutlet" [src]="imgOutlet" class="img-outlet" alt="" />
-  <div *ngIf="!imgOutlet">
+  <img *ngIf="items" [src]="items[0].img_path_outlet" class="img-outlet" alt="" />
+  <div *ngIf="!items">
     <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
   </div>
 
@@ -107,14 +107,14 @@
         </ion-row>
 
         <div class="plus-minus">
-          <ion-button (click)="decrement(item)" color="danger" expand="block" class="decrement">
+          <ion-button *ngIf="item.qty == 0" (click)="decrement(item)" color="medium" expand="block" class="decrement">
+            <b>-</b>
+          </ion-button>
+          <ion-button *ngIf="item.qty > 0" (click)="decrement(item)" color="danger" expand="block" class="decrement">
             <b>-</b>
           </ion-button>
           <ion-badge color="light" class="qty">
-            <ion-text color="dark" *ngIf="item.qty == 0">
-              {{ item.qty }}
-            </ion-text>
-            <ion-text color="primary" *ngIf="item.qty > 0">
+            <ion-text color="dark">
               {{ item.qty }}
             </ion-text>
           </ion-badge>

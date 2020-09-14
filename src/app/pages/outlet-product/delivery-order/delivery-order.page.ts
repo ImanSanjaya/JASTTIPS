@@ -22,7 +22,7 @@ export class DeliveryOrderPage implements OnInit {
   nameOutlets: any;
   cartItems: any;
 
-  totalItem: any;
+  totalItems: any;
   total: any;
 
   constructor(
@@ -40,14 +40,14 @@ export class DeliveryOrderPage implements OnInit {
 
   getCartItem() {
 
-    this.cartItems = JSON.parse(localStorage.getItem('cart-item'))
+    this.cartItems = JSON.parse(localStorage.getItem('cart-items'))
     if (this.cartItems) {
       this.nameOutlets = [...new Set(this.cartItems.map(data => data.name_outlet))]
       let subTotal = this.cartItems.map(data => data.sub_total)
-      this.totalItem = subTotal.reduce((a,b)=>{return a + b},0)
+      this.totalItems = subTotal.reduce((a,b)=>{return a + b},0)
     }
       
-    this.total = this.totalItem > 0 ? this.totalItem : 0
+    this.total = this.totalItems > 0 ? this.totalItems : 0
   }
 
   getUsername() {

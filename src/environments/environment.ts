@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiSendMessageWA: "https://api.whatsapp.com/send?phone=",
-  apiJasttips: "https://sitektif.com/RestFulJasttips/index.php/customer/",
+  apiJasttips: "https://www.sitektif.com/jasttips.api/customer/",
   interceptorDebug: true,
 };
 

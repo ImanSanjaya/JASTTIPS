@@ -39,8 +39,10 @@ export class DashboardPage implements OnInit {
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 1,
+    spaceBetween: 5,
+    autoHeight: true,
     autoplay: true,
-    speed: 300,
+    speed: 1000,
   };
 
   doRefresh(event) {

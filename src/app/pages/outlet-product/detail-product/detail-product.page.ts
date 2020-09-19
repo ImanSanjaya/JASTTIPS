@@ -78,8 +78,6 @@ export class DetailProductPage implements OnInit {
   }
 
   increment(item) {
-    let added = false;
-
     this.items.map((data) => {
       if (data.id_item === item.id_item) {
         item.qty += 1
@@ -90,7 +88,6 @@ export class DetailProductPage implements OnInit {
           item.sub_total = item.price_item * item.qty
         }
       }
-      added = true
     })
     localStorage.setItem('outlet-' + this.detailProductId, JSON.stringify(this.items))
     this.cartService.addItem(item);

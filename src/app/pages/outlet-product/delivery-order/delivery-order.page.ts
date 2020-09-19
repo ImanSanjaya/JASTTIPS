@@ -36,6 +36,10 @@ export class DeliveryOrderPage implements OnInit {
     this.getUsername();
     this.getNoTelpUser();
     this.getCartItem();
+    setInterval(() => {
+      this.getCartItem();
+      this.total
+    })
   }
 
   getCartItem() {
@@ -48,6 +52,10 @@ export class DeliveryOrderPage implements OnInit {
     }
       
     this.total = this.totalItems > 0 ? this.totalItems : 0
+  }
+
+  removeItem(item) {
+    this.cartService.removeProduct(item)
   }
 
   getUsername() {

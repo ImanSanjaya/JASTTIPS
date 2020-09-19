@@ -53,63 +53,56 @@
         <ion-textarea [(ngModel)]="formDeliveryOrder.additional_message" [ngModelOptions]="{standalone: true}" placeholder="Mie Kocoknya jangan pake cuka ya, Sama Kopinya jangan lupa pake es"></ion-textarea>
       </ion-item>
     </ion-list>
-    <ion-list style="margin-top: -25px" *ngIf="cartItems">
-      <h4 class="ion-padding" style="margin-bottom: -10px">Detail Pesanan</h4>
+
+    <ion-list class="detail-pesanan" *ngIf="cartItems">
+      <h4 class="ion-padding">Detail Pesanan</h4>
       <ion-card *ngFor="let item of cartItems">
-        <!-- <ion-card-header color="dark">
-          <div *ngFor="let nameOutlet of nameOutlets">
-            <ion-card-subtitle *ngIf="item.name_outlet == nameOutlet">{{ nameOutlet }}</ion-card-subtitle>
-          </div>
-        </ion-card-header> -->
-        <ion-card-content style="margin-top: 10px;" class="ion-no-padding">
+        <ion-card-header color="medium">
+          <ion-card-subtitle>
+            {{ item.name_outlet }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
           <ion-row>
             <ion-col size="4">
-              <img [src]="item.img_path_item" class="img-pesan-makanan ion-no-padding" alt="" />
+              <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
             </ion-col>
             <ion-col size="8">
-              <ion-grid>
-                <ion-text color="dark">
-                  <div class="title">
-                    {{ item.name_outlet }}
-                  </div>
-                </ion-text>
-                <ion-row style="margin-left: -5px;">
-                  <ion-col size="9">
-                    <ion-text color="dark">
-                      <div class="title">
-                        {{ item.name_item }}
-                      </div>
-                    </ion-text>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-text class="ion-text-end" color="medium">
-                      <div class="content">
-                        {{ item.qty }} Item
-                      </div>
-                    </ion-text>
-                  </ion-col>
-                </ion-row>
-                <ion-text color="primary">
-                  <div class="content price-promo" *ngIf="item.status_promo == '1'">
+
+              <ion-item lines="none" class="ion-no-padding">
+                <div class="name-item">
+                  {{ item.name_item }}
+                </div>
+                <ion-icon slot="end" name="trash" color="danger" (click)="removeItem(item)"></ion-icon>
+              </ion-item>
+              
+              <ion-text color="dark">
+                <div class="qty-item">
+                  Item : {{ item.qty }}
+                </div>
+              </ion-text>
+
+              <ion-text color="medium">
+                <div class="price-promo" *ngIf="item.status_promo == '1'">
+                  Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
+                </div>
+              </ion-text>
+              
+              <ion-text color="primary">
+                <div *ngIf="item.status_promo == '1';else noPromo">
+                  Harga Promo : {{ item.price_item_promo | currency:'Rp. ':true:'1.0' }}
+                </div>
+                <ng-template #noPromo>
+                  <div class="content">
                     Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
                   </div>
-                </ion-text>
-                <ion-text color="medium">
-                  <div class="content" *ngIf="item.status_promo == '1';else noPromo">
-                    Harga Promo : {{ item.price_item_promo | currency:'Rp. ':true:'1.0' }}
-                  </div>
-                  <ng-template #noPromo>
-                    <div class="content">
-                      Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
-                    </div>
-                  </ng-template>
-                </ion-text>
-                <ion-text color="danger">
-                  <div class="content">
-                    Sub Total : {{ item.sub_total | currency:'Rp. ':true:'1.0' }}
-                  </div>
-                </ion-text>
-              </ion-grid>
+                </ng-template>
+              </ion-text>
+              <ion-text color="danger">
+                <div class="content">
+                  Sub Total : {{ item.sub_total | currency:'Rp. ':true:'1.0' }}
+                </div>
+              </ion-text>
             </ion-col>
           </ion-row>
         </ion-card-content>
@@ -131,9 +124,7 @@
       </ion-text>
     </ion-col>
   </ion-row>
-  <ion-toolbar>
-    <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary" class="btn-pesan">
-      <div class="txt-keranjang">Pesan</div>
-    </ion-button>
-  </ion-toolbar>
+  <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary" class="btn-pesan">
+    <div class="txt-keranjang">Pesan</div>
+  </ion-button>
 </ion-footer>

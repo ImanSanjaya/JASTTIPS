@@ -88,23 +88,33 @@ export class DashboardPage implements OnInit {
 
   getItemListPromo() {
     this.jasttipsDataService.getListItemPromo().subscribe((data) => {
-      this.promoItems = data["item_promo"].map((item) => {
+      this.promoItems = data["item_promo"].map((data) => {
         return {
-          ...item,
-          qty: 0,
-          total: 0,
-          subtotal: 0,
+          ...data
         };
       });
     });
   }
 
   selectPromoItem(item) {
-    if (localStorage.getItem('promo-item-' + item.id_item)) {
-    } else {
-      localStorage.setItem('promo-item-' + item.id_item, JSON.stringify(item))
-    }
+    this.jasttipsDataService
+      .getListItem(item.id_outlet)
+      .subscribe((rest) => {
+        let items = rest["item"].map((data) => {
+          return {
+            ...data,
+            qty: 0,
+            sub_total: 0,
+          };
+        });
 
-    this.router.navigateByUrl('/promo-product/' + item.id_item)
+        if (localStorage.getItem("outlet-" + item.id_outlet)) {
+
+        } else {
+          localStorage.setItem("outlet-" + item.id_outlet, JSON.stringify(items));
+        }
+      });
+
+    this.router.navigateByUrl('/list-product/' + item.id_category_outlet + '/detail-product/' + item.id_outlet);
   }
 }

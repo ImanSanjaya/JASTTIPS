@@ -8,123 +8,128 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="total == 0">
-  <ion-list class="no-cart">
-    <img src="assets/img/no-cart/no-cart.svg">
-    <h2 class="ion-no-padding">Belum ada pesanan !</h2>
-    <h3 class="ion-no-padding">Happy Shopping Day ...</h3>
-  </ion-list>
-</ion-content>
-
-<ion-content *ngIf="total > 0">
-  <form>
-    <ion-list class="ion-padding">
-      <h4>Data Diri</h4>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked">
-          <ion-row>
-            <ion-text color="danger">*</ion-text>Nama
-          </ion-row>
-        </ion-label>
-        <ion-input class="mt-user ion-text-capitalize" type="text" value="{{ username }}" disabled>
-        </ion-input>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked">
-          <ion-row>
-            <ion-text color="danger">*</ion-text>Nomor Telp
-          </ion-row>
-        </ion-label>
-        <ion-input type="text" value="{{ no_telp_user }}" disabled>
-        </ion-input>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked">
-          <ion-row>
-            <ion-text color="danger">*</ion-text>Alamat
-          </ion-row>
-        </ion-label>
-        <ion-input [(ngModel)]="formDeliveryOrder.address_customer" [ngModelOptions]="{standalone: true}" type="text"
-          placeholder="Alamat lengkapmu ...">
-        </ion-input>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked">Pesan Tambahan</ion-label>
-        <ion-textarea [(ngModel)]="formDeliveryOrder.additional_message" [ngModelOptions]="{standalone: true}" placeholder="Mie Kocoknya jangan pake cuka ya, Sama Kopinya jangan lupa pake es"></ion-textarea>
-      </ion-item>
-    </ion-list>
-
-    <ion-list class="detail-pesanan" *ngIf="cartItems">
-      <h4 class="ion-padding">Detail Pesanan</h4>
-      <ion-card *ngFor="let item of cartItems">
-        <ion-card-header color="medium">
-          <ion-card-subtitle>
-            {{ item.name_outlet }}
-          </ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content class="ion-no-padding">
-          <ion-row>
-            <ion-col size="4">
-              <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
-            </ion-col>
-            <ion-col size="8">
-
-              <ion-item lines="none" class="ion-no-padding">
-                <div class="name-item">
-                  {{ item.name_item }}
-                </div>
-                <ion-icon slot="end" name="trash" color="danger" (click)="removeItem(item)"></ion-icon>
-              </ion-item>
-              
-              <ion-text color="dark">
-                <div class="qty-item">
-                  Item : {{ item.qty }}
-                </div>
-              </ion-text>
-
-              <ion-text color="medium">
-                <div class="price-promo" *ngIf="item.status_promo == '1'">
-                  Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
-                </div>
-              </ion-text>
-              
-              <ion-text color="primary">
-                <div *ngIf="item.status_promo == '1';else noPromo">
-                  Harga Promo : {{ item.price_item_promo | currency:'Rp. ':true:'1.0' }}
-                </div>
-                <ng-template #noPromo>
-                  <div class="content">
+<ng-container *ngIf="total != 0; else totalZero">
+  <ion-content>
+    <form>
+      <ion-list class="ion-padding">
+        <h4>Data Diri</h4>
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">
+            <ion-row>
+              <ion-text color="danger">*</ion-text>Nama
+            </ion-row>
+          </ion-label>
+          <ion-input class="mt-user ion-text-capitalize" type="text" value="{{ username }}" disabled>
+          </ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">
+            <ion-row>
+              <ion-text color="danger">*</ion-text>Nomor Telp
+            </ion-row>
+          </ion-label>
+          <ion-input type="text" value="{{ no_telp_user }}" disabled>
+          </ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">
+            <ion-row>
+              <ion-text color="danger">*</ion-text>Alamat
+            </ion-row>
+          </ion-label>
+          <ion-input [(ngModel)]="formDeliveryOrder.address_customer" [ngModelOptions]="{standalone: true}" type="text"
+            placeholder="Alamat lengkapmu ...">
+          </ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked">Pesan Tambahan</ion-label>
+          <ion-textarea [(ngModel)]="formDeliveryOrder.additional_message" [ngModelOptions]="{standalone: true}"
+            placeholder="Mie Kocoknya jangan pake cuka ya, Sama Kopinya jangan lupa pake es"></ion-textarea>
+        </ion-item>
+      </ion-list>
+  
+      <ion-list class="detail-pesanan" *ngIf="cartItems">
+        <h4 class="ion-padding">Detail Pesanan</h4>
+        <ion-card *ngFor="let item of cartItems">
+          <ion-card-header color="medium">
+            <ion-card-subtitle>
+              {{ item.name_outlet }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding">
+            <ion-row>
+              <ion-col size="4">
+                <img [src]="item.img_path_item" class="img-pesan-makanan" alt="" />
+              </ion-col>
+              <ion-col size="8">
+  
+                <ion-item lines="none" class="ion-no-padding">
+                  <div class="name-item">
+                    {{ item.name_item }}
+                  </div>
+                  <ion-icon slot="end" name="trash" color="danger" (click)="removeItem(item)"></ion-icon>
+                </ion-item>
+  
+                <ion-text color="dark">
+                  <div class="qty-item">
+                    Item : {{ item.qty }}
+                  </div>
+                </ion-text>
+  
+                <ion-text color="medium">
+                  <div class="price-promo" *ngIf="item.status_promo == '1'">
                     Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
                   </div>
-                </ng-template>
-              </ion-text>
-              <ion-text color="danger">
-                <div class="content">
-                  Sub Total : {{ item.sub_total | currency:'Rp. ':true:'1.0' }}
-                </div>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-list>
-  </form>
-</ion-content>
+                </ion-text>
+  
+                <ion-text color="primary">
+                  <div *ngIf="item.status_promo == '1';else noPromo">
+                    Harga Promo : {{ item.price_item_promo | currency:'Rp. ':true:'1.0' }}
+                  </div>
+                  <ng-template #noPromo>
+                    <div class="content">
+                      Harga : {{ item.price_item | currency:'Rp. ':true:'1.0' }}
+                    </div>
+                  </ng-template>
+                </ion-text>
+                <ion-text color="danger">
+                  <div class="content">
+                    Sub Total : {{ item.sub_total | currency:'Rp. ':true:'1.0' }}
+                  </div>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </form>
+  </ion-content>
 
-<ion-footer *ngIf="total > 0">
-  <ion-row>
-    <ion-col size="6">
-      <h4 class="total">Total</h4>
-    </ion-col>
-    <ion-col size="6">
-      <ion-text color="primary">
-        <h4 class="sub-total" color="primary">
-          {{ total | currency:'Rp. ':true:'1.0'}}
-        </h4>
-      </ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary" class="btn-pesan">
-    <div class="txt-keranjang">Pesan</div>
-  </ion-button>
-</ion-footer>
+  <ion-footer>
+    <ion-row>
+      <ion-col size="6">
+        <h4 class="total">Total</h4>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text color="primary">
+          <h4 class="sub-total" color="primary">
+            {{ total | currency:'Rp. ':true:'1.0'}}
+          </h4>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-button (click)="submitDeliveryOrder()" expand="block" color="primary" class="btn-pesan">
+      <div class="txt-keranjang">Pesan</div>
+    </ion-button>
+  </ion-footer>
+</ng-container>
+
+<ng-template #totalZero>
+  <ion-content>
+    <ion-list class="no-cart">
+      <img src="assets/img/no-cart/no-cart.svg">
+      <h2 class="ion-no-padding">Belum ada pesanan !</h2>
+      <h3 class="ion-no-padding">Happy Shopping Day ...</h3>
+    </ion-list>
+  </ion-content>
+</ng-template>

@@ -36,11 +36,21 @@ export class DeliveryOrderPage implements OnInit {
     this.getUsername();
     this.getNoTelpUser();
     this.getCartItem();
-    setInterval(() => {
-      this.getCartItem();
-      this.total
-    })
+    this.getCartItem();
+    this.total;
+    // setInterval(() => {
+    //   this.getCartItem();
+    //   this.total;
+    // }, 2000)
   }
+
+  // doRefresh(event) {
+  //   setTimeout(() => {
+  //     this.getCartItem();
+  //     this.total;
+  //     event.target.complete();
+  //   }, 2000);
+  // }
 
   getCartItem() {
 
@@ -55,7 +65,12 @@ export class DeliveryOrderPage implements OnInit {
   }
 
   removeItem(item) {
-    this.cartService.removeProduct(item)
+    this.cartService.removeProduct(item);
+
+    setTimeout(() => {
+      this.getCartItem();
+      this.total;
+    }, 0);
   }
 
   getUsername() {

@@ -15,6 +15,8 @@ export class ListProductPage implements OnInit {
   products: any;
   cartItemCount: any;
 
+  interval: any;
+
   constructor(
     private jasttipsService: JasttipsDataService,
     private route: ActivatedRoute,
@@ -23,9 +25,13 @@ export class ListProductPage implements OnInit {
 
   ngOnInit() {
     this.getData();
-    setInterval(() => {
-      this.getItemCount();
-    }, 1000);
+    this.getItemCount();
+    
+    this.getItemCountReload();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 
   doRefresh(event) {
@@ -56,6 +62,12 @@ export class ListProductPage implements OnInit {
 
     itemCount = localStorage.getItem("cartItemCount");
     this.cartItemCount = itemCount > 0 ? itemCount : 0;
+  }
+
+  getItemCountReload() {
+    this.interval = setInterval(() => {
+      this.getItemCount();
+    }, 1000)
   }
 
   filterData(ev: any) {

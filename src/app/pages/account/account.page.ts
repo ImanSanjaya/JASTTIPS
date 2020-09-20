@@ -12,6 +12,8 @@ export class AccountPage implements OnInit {
   username: string;
   no_telp_user: string;
 
+  interval: any;
+
   constructor(
     private modalCtrl: ModalController,
     private userData: UserData,
@@ -19,10 +21,14 @@ export class AccountPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    setInterval(() => {
-      this.getUsername();
-      this.getNoTelpUser();
-    }, 1000)
+    this.getUsername();
+    this.getNoTelpUser();
+    
+    this.getDataUser();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval)
   }
 
   close() {
@@ -39,6 +45,13 @@ export class AccountPage implements OnInit {
     this.userData.getNoTelpUser().then((no_telp_user) => {
       this.no_telp_user = no_telp_user;
     });
+  }
+
+  getDataUser() {
+    this.interval = setInterval(() => {
+      this.getUsername();
+      this.getNoTelpUser();
+    }, 1000);
   }
 
   async changeUsername() {

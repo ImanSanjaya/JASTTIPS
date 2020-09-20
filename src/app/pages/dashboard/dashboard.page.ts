@@ -15,8 +15,9 @@ export class DashboardPage implements OnInit {
   no_telp_user: string;
 
   categories: any;
-
   promoItems: any;
+
+  interval: any;
 
   connection: boolean = true;
 
@@ -30,10 +31,15 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.getData();
     this.getItemListPromo();
-    setInterval(() => {
-      this.getUsername();
-      this.getNoTelpUser();
-    }, 1000);
+
+    this.getUsername();
+    this.getNoTelpUser();
+    
+    this.getDataUser();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval)
   }
 
   slideOptsOne = {
@@ -84,6 +90,13 @@ export class DashboardPage implements OnInit {
         console.log(this.connection);
       }
     );
+  }
+
+  getDataUser() {
+    this.interval = setInterval(() => {
+      this.getUsername();
+      this.getNoTelpUser();
+    }, 1000);
   }
 
   getItemListPromo() {

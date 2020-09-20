@@ -29,10 +29,6 @@ export class DetailProductPage implements OnInit {
     this.menuSegment = "menuLengkap";
     this.loadData();
     this.loadGetData();
-
-    setInterval(() => {
-      this.loadGetData()
-    }, 500)
   }
 
   doRefresh(event) {
@@ -45,6 +41,12 @@ export class DetailProductPage implements OnInit {
     }, 2000);
   }
 
+  funSetTimeOut() {
+    setTimeout(() => {
+      this.loadGetData();
+    }, 0);
+  }
+
   loadData() {
     this.jasttipsDataService
       .getListItem(this.detailProductId)
@@ -54,7 +56,7 @@ export class DetailProductPage implements OnInit {
 
         this.items = data["item"].map((item) => {
 
-          let itemsFilter = getStorage.filter(data => data.id_item === item.id_item)
+          let itemsFilter = getStorage.filter(data => data.id_item === item.id_item);
 
           return {
             ...item,
@@ -91,6 +93,8 @@ export class DetailProductPage implements OnInit {
     })
     localStorage.setItem('outlet-' + this.detailProductId, JSON.stringify(this.items))
     this.cartService.addItem(item);
+
+    this.funSetTimeOut();
   }
 
   decrement(item) {
@@ -114,6 +118,8 @@ export class DetailProductPage implements OnInit {
       localStorage.setItem('outlet-' + this.detailProductId, JSON.stringify(this.items))
       this.cartService.reduceItem(item);
     }
+
+    this.funSetTimeOut();
   }
 
   setCart() {

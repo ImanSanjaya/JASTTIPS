@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { JasttipsDataService } from "../../api/jasttips-data.service";
 import { UserData } from "src/app/api/user-data";
 import { ModalController } from "@ionic/angular";
@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   templateUrl: "./dashboard.page.html",
   styleUrls: ["./dashboard.page.scss"],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, OnDestroy {
   username: string;
   no_telp_user: string;
 
@@ -30,12 +30,13 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.getItemListPromo();
-
+    
     this.getUsername();
     this.getNoTelpUser();
     
     this.getDataUser();
+
+    this.getItemListPromo();
   }
 
   ngOnDestroy() {

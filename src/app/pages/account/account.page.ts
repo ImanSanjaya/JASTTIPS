@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { UserData } from 'src/app/api/user-data';
 
@@ -7,7 +7,7 @@ import { UserData } from 'src/app/api/user-data';
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
-export class AccountPage implements OnInit {
+export class AccountPage implements OnInit, OnDestroy {
 
   username: string;
   no_telp_user: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { JasttipsDataService } from "../../../api/jasttips-data.service";
 
@@ -7,7 +7,7 @@ import { JasttipsDataService } from "../../../api/jasttips-data.service";
   templateUrl: "./list-product.page.html",
   styleUrls: ["./list-product.page.scss"],
 })
-export class ListProductPage implements OnInit {
+export class ListProductPage implements OnInit, OnDestroy {
 
   productId = this.route.snapshot.paramMap.get("productId");
   
@@ -27,7 +27,7 @@ export class ListProductPage implements OnInit {
     this.getData();
     this.getItemCount();
     
-    this.getItemCountReload();
+    this.reloadItemCount();
   }
 
   ngOnDestroy() {
@@ -64,7 +64,7 @@ export class ListProductPage implements OnInit {
     this.cartItemCount = itemCount > 0 ? itemCount : 0;
   }
 
-  getItemCountReload() {
+  reloadItemCount() {
     this.interval = setInterval(() => {
       this.getItemCount();
     }, 1000)

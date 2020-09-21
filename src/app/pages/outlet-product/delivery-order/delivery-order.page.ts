@@ -1,10 +1,8 @@
+import { DetailProductPage } from './../detail-product/detail-product.page';
 import { Component, OnInit } from "@angular/core";
 import { JasttipsDataService } from "src/app/api/jasttips-data.service";
 
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { of } from "rxjs";
-import { map } from "rxjs/operators";
 import { UserData } from 'src/app/api/user-data';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -38,19 +36,7 @@ export class DeliveryOrderPage implements OnInit {
     this.getCartItem();
     this.getCartItem();
     this.total;
-    // setInterval(() => {
-    //   this.getCartItem();
-    //   this.total;
-    // }, 2000)
   }
-
-  // doRefresh(event) {
-  //   setTimeout(() => {
-  //     this.getCartItem();
-  //     this.total;
-  //     event.target.complete();
-  //   }, 2000);
-  // }
 
   getCartItem() {
 

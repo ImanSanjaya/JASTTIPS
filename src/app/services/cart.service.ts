@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { JasttipsDataService } from "../api/jasttips-data.service";
 
 @Injectable({
   providedIn: "root",
@@ -7,22 +6,20 @@ import { JasttipsDataService } from "../api/jasttips-data.service";
 export class CartService {
   cart: any[] = [];
 
+  items: any;
   itemCart: any = {};
   itemInCart = [];
 
-  cartItemCount: any = 0;
+  cartItemCount: any;
 
-  constructor(
-    private jasttipsService: JasttipsDataService
-  ) {
-    // this.cart = JSON.parse(localStorage.getItem('cart-items'));
-  }
+  constructor() {}
 
   addItem(item) {
     this.cart = JSON.parse(localStorage.getItem("cart-items"));
     this.itemInCart = [];
 
     if (this.cart == null) {
+      this.cartItemCount = 0;
       this.itemCart = item;
       this.itemInCart.push(this.itemCart);
       localStorage.setItem("cart-items", JSON.stringify(this.itemInCart));
@@ -66,12 +63,10 @@ export class CartService {
 
   }
 
-  // Masih Bugs
   removeProduct(item) {
     this.cart = JSON.parse(localStorage.getItem("cart-items"));
+    this.cartItemCount = 0;
     this.itemCart = item;
-
-    let getStorage = JSON.parse(localStorage.getItem('outlet-'+ this.itemCart.id_outlet))
 
     for (let i = 0; i <= this.cart.length - 1; i++) {
       if (this.cart[i].id_item == this.itemCart.id_item) {
@@ -94,23 +89,18 @@ export class CartService {
       }
     }
 
-    this.jasttipsService
-      .getListItem(this.itemCart.id_outlet)
-      .subscribe((data) => {
+    let getStorage = JSON.parse(localStorage.getItem('outlet-'+ this.itemCart.id_outlet));
 
-        let items = data["item"].map((item) => {
-          let itemsFilter = getStorage.filter(data => data.id_item === item.id_item);
+    this.items = getStorage;
 
-          return {
-            ...item,
-            qty: 0,
-            sub_total: 0,
-          };
-        });
-
-        localStorage.setItem("outlet-" + this.itemCart.id_outlet, JSON.stringify(items));
-      });
-
+    this.items.map(data => {
+      if (data.id_item === this.itemCart.id_item) {
+        data.qty = 0;
+        data.sub_total = 0;
+      }
+    })
+    
+    localStorage.setItem('outlet-' + this.itemCart.id_outlet, JSON.stringify(this.items));
   }
 
 }

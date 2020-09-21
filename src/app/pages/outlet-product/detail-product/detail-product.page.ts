@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-
-import { JasttipsDataService } from "../../../api/jasttips-data.service";
-import { BehaviorSubject, Observable } from "rxjs";
 import { CartService } from "src/app/services/cart.service";
-import { Storage } from "@ionic/storage";
+import { JasttipsDataService } from "../../../api/jasttips-data.service";
 
 @Component({
   selector: "app-detail-product",
@@ -16,7 +13,8 @@ export class DetailProductPage implements OnInit {
   detailProductId = this.route.snapshot.paramMap.get("detailProductId");
   items: any;
   total: any;
-  menuSegment: string;
+  
+  menuSegment = "menuLengkap";
 
   constructor(
     private jasttipsDataService: JasttipsDataService,
@@ -26,16 +24,11 @@ export class DetailProductPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.menuSegment = "menuLengkap";
     this.loadData();
-    this.loadGetData();
   }
 
   doRefresh(event) {
-    console.log("Begin async operation");
-
     setTimeout(() => {
-      console.log("Async operation has ended");
       this.loadData();
       event.target.complete();
     }, 2000);
@@ -43,7 +36,7 @@ export class DetailProductPage implements OnInit {
 
   funSetTimeOut() {
     setTimeout(() => {
-      this.loadGetData();
+      this.loadData();
     }, 0);
   }
 
@@ -66,17 +59,15 @@ export class DetailProductPage implements OnInit {
           
         });
       });
-  }
 
-  loadGetData() {
-    let totalItem;
+      let totalItem;
 
-    if (localStorage.getItem('outlet-'+ this.detailProductId)){
-      let getStorage = JSON.parse(localStorage.getItem('outlet-' + this.detailProductId))
-      let subTotal = getStorage.map(data => data.sub_total)
-      totalItem = subTotal.reduce((a,b)=>{return a + b},0)
-    }
-    this.total = totalItem > 0 ? totalItem : 0
+      if (localStorage.getItem('outlet-'+ this.detailProductId)){
+        let getStorage = JSON.parse(localStorage.getItem('outlet-' + this.detailProductId));
+        let subTotal = getStorage.map(data => data.sub_total);
+        totalItem = subTotal.reduce((a,b)=>{return a + b},0);
+      }
+      this.total = totalItem > 0 ? totalItem : 0;
   }
 
   increment(item) {

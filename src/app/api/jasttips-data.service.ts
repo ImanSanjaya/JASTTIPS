@@ -79,16 +79,15 @@ export class JasttipsDataService {
       alamat + formDeliveryOrder.address_customer + enter +
       pesanTambahan + formDeliveryOrder.additional_message + enter2x +
 
-      this.order.
+      this.nameOutlet + enter +
+      alamatOutlet + enter +
+      noTelpOutlet + environment.apiSendMessageWA + '6287879571222' + enter +
+      this.qty + ' ' + this.nameItem + ' ' + this.priceItemPromo +
+      + this.priceItem + enter + 
+      this.subTotal + enter2x + 
 
-      // this.nameOutlet + enter +
-      // alamatOutlet + enter +
-      // noTelpOutlet + environment.apiSendMessageWA + '6287879571222' + enter +
-      // this.qty + ' ' + this.nameItem + ' ' + this.priceItemPromo +
-      // + this.priceItem + enter + 
-      // this.subTotal + enter2x + 
-
-      // total
+      total
+    )
   }
 
   public sendMessageForOrder(phone_admin: string, formOrder) {

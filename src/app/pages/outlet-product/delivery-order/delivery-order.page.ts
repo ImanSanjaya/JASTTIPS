@@ -76,7 +76,6 @@ export class DeliveryOrderPage implements OnInit {
     additional_message: "",
   };
 
-
   submitDeliveryOrder() {
     open(
       this.jasttipsDataService.sendMessageForDeliveryOrder(
@@ -84,7 +83,8 @@ export class DeliveryOrderPage implements OnInit {
         "6287879571222",
         this.username,
         this.no_telp_user,
-        this.formDeliveryOrder
+        this.formDeliveryOrder,
+        this.cartItems
       )
     );
   }

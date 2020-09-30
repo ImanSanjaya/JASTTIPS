@@ -12,6 +12,10 @@ export class CartService {
 
   cartItemCount: any;
 
+  getQty: any;
+  qty: any;
+  totalQty: any;
+
   constructor() {}
 
   addItem(item) {
@@ -19,11 +23,15 @@ export class CartService {
     this.itemInCart = [];
 
     if (this.cart == null) {
-      this.cartItemCount = 0;
       this.itemCart = item;
       this.itemInCart.push(this.itemCart);
       localStorage.setItem("cart-items", JSON.stringify(this.itemInCart));
-      localStorage.setItem("cartItemCount", (this.cartItemCount += 1));
+
+      this.getQty = JSON.parse(localStorage.getItem('cart-items'));
+      this.qty = this.getQty.map(data => data.qty);
+      this.totalQty = this.qty.reduce((a,b)=>{return a + b},0);
+
+      localStorage.setItem("cartItemCount", (this.totalQty));
     } else {
       for (let i = 0; i <= this.cart.length - 1; i++) {
         if (this.cart[i].id_item == item.id_item) {
@@ -34,7 +42,12 @@ export class CartService {
       this.itemCart = item;
       this.cart.push(this.itemCart);
       localStorage.setItem("cart-items", JSON.stringify(this.cart));
-      localStorage.setItem("cartItemCount", (this.cartItemCount += 1));
+
+      this.getQty = JSON.parse(localStorage.getItem('cart-items'));
+      this.qty = this.getQty.map(data => data.qty);
+      this.totalQty = this.qty.reduce((a,b)=>{return a + b},0);
+
+      localStorage.setItem("cartItemCount", (this.totalQty));
     }
   }
 
@@ -50,7 +63,12 @@ export class CartService {
 
     this.cart.push(this.itemCart);
     localStorage.setItem("cart-items", JSON.stringify(this.cart));
-    localStorage.setItem("cartItemCount", String((this.cartItemCount -= 1)));
+    
+    this.getQty = JSON.parse(localStorage.getItem('cart-items'));
+    this.qty = this.getQty.map(data => data.qty);
+    this.totalQty = this.qty.reduce((a,b)=>{return a + b},0);
+
+    localStorage.setItem("cartItemCount", (this.totalQty));
 
     if (this.itemCart.qty == 0) {
       for (let [index, key] of this.cart.entries()) {
@@ -65,7 +83,6 @@ export class CartService {
 
   removeProduct(item) {
     this.cart = JSON.parse(localStorage.getItem("cart-items"));
-    this.cartItemCount = 0;
     this.itemCart = item;
 
     for (let i = 0; i <= this.cart.length - 1; i++) {

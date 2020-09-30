@@ -19,6 +19,8 @@ export class JasttipsDataService {
   priceItem: any;
   subTotal: any;
 
+  noWaAdmin: any;
+
   constructor(private http: HttpClient) {}
 
   public getListCategory() {
@@ -37,56 +39,40 @@ export class JasttipsDataService {
     return this.http.get<any>(environment.apiJasttips + 'GetListItemPromo', {});
   }
 
-  public sendMessageForDeliveryOrder(phone_admin: string, username, no_telp_user, formDeliveryOrder, detailOrder) {
+  public getNumberWhatsApp() {
+    return this.http.get<any>(environment.apiJasttips + 'GetNumberWhatsApp', {});
+  }
+
+  public textBold(text) {
+    text = '*' + text + '*';
+    return text;
+  }
+
+  public sendMessageForDeliveryOrder(username, no_telp_user, formDeliveryOrder, detailOrder) {
 
     const enter = '%0A';
     const enter2x = '%0A%0A';
-    
-    const headerMsg = '*Untuk Pemesanan Item* ';
+    const headerMsg = '*Pemesanan Item* ';
+
     const nama = '*Nama :* ';
     const noTelp = '*No* *Telepon* *:* ';
     const alamat = '*Alamat* *:* ';
     const pesanTambahan = '*Pesan* *Tambahan* *:* ';
-
-
-    detailOrder.map(data => {
-      this.order = data;
-      this.nameOutlet = '*' + data.name_outlet + '*';
-      this.qty = data.qty;
-      this.nameItem = data.name_item;
-      this.priceItemPromo = data.price_item_promo;
-      this.priceItem = data.price_item;
-      this.subTotal = data.sub_total;
-    });
+    let getNoWaAdmin = localStorage.getItem('no_wa_admin');
     
-    
-    const alamatOutlet = 'Alamat Outlet : Grand Taruma';
-    const noTelpOutlet = 'No Telp : ';
-    const qty = '2';
-    const nameItem = 'Kopi Peka';
-    const priceItem = '(Rp.100,000)';
-
-    const subTotal = '*Sub Total : Rp.200,000*';
-
-    const total = '*TOTAL PEMESANAN : Rp.200,000*'
-
     return (
-      environment.apiSendMessageWA +
-      phone_admin + '&text=' +
+      //  --- Send -----------------------------------------------------
+      environment.apiSendMessageWA + getNoWaAdmin + '&text=' +
+      // --------------------------------------------------------------
+
+      // --- Isi Text -------------------------------------------------
       headerMsg + enter2x +
       nama + username + enter +
       noTelp + environment.apiSendMessageWA + no_telp_user + enter +
       alamat + formDeliveryOrder.address_customer + enter +
-      pesanTambahan + formDeliveryOrder.additional_message + enter2x +
+      pesanTambahan + formDeliveryOrder.additional_message + enter2x
+      // --------------------------------------------------------------
 
-      this.nameOutlet + enter +
-      alamatOutlet + enter +
-      noTelpOutlet + environment.apiSendMessageWA + '6287879571222' + enter +
-      this.qty + ' ' + this.nameItem + ' ' + this.priceItemPromo +
-      + this.priceItem + enter + 
-      this.subTotal + enter2x + 
-
-      total
     )
   }
 

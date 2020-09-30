@@ -14,6 +14,8 @@ import { CartService } from 'src/app/services/cart.service';
 export class DeliveryOrderPage implements OnInit {
   data: any;
 
+  noWaAdmin: any;
+
   username: string;
   no_telp_user: string;
   
@@ -39,10 +41,8 @@ export class DeliveryOrderPage implements OnInit {
   }
 
   getCartItem() {
-
-    this.cartItems = JSON.parse(localStorage.getItem('cart-items'))
+    this.cartItems = JSON.parse(localStorage.getItem('cart-items'));
     if (this.cartItems) {
-      this.nameOutlets = [...new Set(this.cartItems.map(data => data.name_outlet))]
       let subTotal = this.cartItems.map(data => data.sub_total)
       this.totalItems = subTotal.reduce((a,b)=>{return a + b},0)
     }
@@ -77,10 +77,16 @@ export class DeliveryOrderPage implements OnInit {
   };
 
   submitDeliveryOrder() {
+
+    this.jasttipsDataService.getNumberWhatsApp().subscribe(res => {
+      res.number_whatsapp.map(data => {
+        this.noWaAdmin = data.no_wa;
+        localStorage.setItem('no_wa_admin', this.noWaAdmin);
+      })
+    });
+
     open(
       this.jasttipsDataService.sendMessageForDeliveryOrder(
-        // "6287869667004",
-        "6287879571222",
         this.username,
         this.no_telp_user,
         this.formDeliveryOrder,
@@ -88,4 +94,5 @@ export class DeliveryOrderPage implements OnInit {
       )
     );
   }
+
 }

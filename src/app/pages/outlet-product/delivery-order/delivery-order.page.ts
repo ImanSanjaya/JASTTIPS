@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { DetailProductPage } from './../detail-product/detail-product.page';
 import { Component, OnInit } from "@angular/core";
 import { JasttipsDataService } from "src/app/api/jasttips-data.service";
@@ -36,8 +37,16 @@ export class DeliveryOrderPage implements OnInit {
     this.getUsername();
     this.getNoTelpUser();
     this.getCartItem();
-    this.getCartItem();
+    this.getNoAdmin();
     this.total;
+  }
+
+  getNoAdmin() {
+    this.jasttipsDataService.getNumberWhatsApp().subscribe(res => {
+      this.noWaAdmin = res.number_whatsapp.map(data => {
+        return data.no_wa;
+      })
+    });
   }
 
   getCartItem() {
@@ -47,7 +56,7 @@ export class DeliveryOrderPage implements OnInit {
       this.totalItems = subTotal.reduce((a,b)=>{return a + b},0)
     }
       
-    this.total = this.totalItems > 0 ? this.totalItems : 0
+    this.total = this.totalItems > 0 ? this.totalItems : 0;
   }
 
   removeItem(item) {
@@ -77,22 +86,18 @@ export class DeliveryOrderPage implements OnInit {
   };
 
   submitDeliveryOrder() {
-
-    this.jasttipsDataService.getNumberWhatsApp().subscribe(res => {
-      res.number_whatsapp.map(data => {
-        this.noWaAdmin = data.no_wa;
-        localStorage.setItem('no_wa_admin', this.noWaAdmin);
-      })
-    });
-
-    open(
-      this.jasttipsDataService.sendMessageForDeliveryOrder(
-        this.username,
-        this.no_telp_user,
-        this.formDeliveryOrder,
-        this.cartItems
+    this.cartItems.map(data => {
+      let detailOrder = data;
+      window.open(
+        this.jasttipsDataService.sendMessageForDeliveryOrder(
+          this.username,
+          this.noWaAdmin,
+          this.no_telp_user,
+          this.formDeliveryOrder,
+          detailOrder
+        )
       )
-    );
+    })
   }
 
 }

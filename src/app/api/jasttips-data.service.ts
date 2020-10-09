@@ -48,31 +48,33 @@ export class JasttipsDataService {
     return text;
   }
 
-  public sendMessageForDeliveryOrder(username, no_telp_user, formDeliveryOrder, detailOrder) {
+  public sendMessageForDeliveryOrder(username, noWaAdmin,no_telp_user, formDeliveryOrder, detailOrder) {
 
     const enter = '%0A';
     const enter2x = '%0A%0A';
     const headerMsg = '*Pemesanan Item* ';
 
-    const nama = '*Nama :* ';
-    const noTelp = '*No* *Telepon* *:* ';
-    const alamat = '*Alamat* *:* ';
-    const pesanTambahan = '*Pesan* *Tambahan* *:* ';
-    let getNoWaAdmin = localStorage.getItem('no_wa_admin');
+    const txtUsername = '*Nama :* ';
+    const txtNoTelpUser = '*No Telepon :* ';
+    const txtAddress = '*Alamat :* ';
+    const txtAdditionalMessage = '*Pesan Tambahan :* ';
     
     return (
       //  --- Send -----------------------------------------------------
-      environment.apiSendMessageWA + getNoWaAdmin + '&text=' +
-      // --------------------------------------------------------------
+      environment.apiSendMessageWA + noWaAdmin + '&text=' +
+      // ---------------------------------------------------------------
 
-      // --- Isi Text -------------------------------------------------
+      // --- Header ----------------------------------------------------
       headerMsg + enter2x +
-      nama + username + enter +
-      noTelp + environment.apiSendMessageWA + no_telp_user + enter +
-      alamat + formDeliveryOrder.address_customer + enter +
-      pesanTambahan + formDeliveryOrder.additional_message + enter2x
-      // --------------------------------------------------------------
+      txtUsername + username + enter +
+      txtNoTelpUser + environment.apiSendMessageWA + no_telp_user + enter +
+      txtAddress + formDeliveryOrder.address_customer + enter +
+      txtAdditionalMessage + formDeliveryOrder.additional_message + enter2x +
+      // ---------------------------------------------------------------
 
+      // ---------------------------------------------------------------
+      detailOrder.name_item
+      // ---------------------------------------------------------------
     )
   }
 

@@ -7,6 +7,8 @@ import { HttpClient } from "@angular/common/http";
 import { UserData } from 'src/app/api/user-data';
 import { CartService } from 'src/app/services/cart.service';
 
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: "app-delivery-order",
   templateUrl: "./delivery-order.page.html",
@@ -30,7 +32,8 @@ export class DeliveryOrderPage implements OnInit {
     private jasttipsDataService: JasttipsDataService,
     private http: HttpClient,
     private userData: UserData,
-    private cartService: CartService
+    private cartService: CartService,
+    public alert: AlertController
   ) {}
 
   ngOnInit() {
@@ -39,6 +42,17 @@ export class DeliveryOrderPage implements OnInit {
     this.getCartItem();
     this.getNoAdmin();
     this.total;
+  }
+
+  public async presentAlert(title, message) {
+    const alert = await this.alert.create({
+      header: 'JASTTIPS',
+      subHeader: title,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   getNoAdmin() {
@@ -84,20 +98,26 @@ export class DeliveryOrderPage implements OnInit {
     address_customer: "",
     additional_message: "",
   };
+  
 
   submitDeliveryOrder() {
-    this.cartItems.map(data => {
-      let detailOrder = data;
+    this.validasiInputRegistrasi();
+  }
+
+  validasiInputRegistrasi(){
+    if(this.formDeliveryOrder.address_customer  == null || this.formDeliveryOrder.address_customer  == ''){
+      this.presentAlert('Peringatan', 'Mohon Isi Alamat Anda');
+    }else{
       window.open(
         this.jasttipsDataService.sendMessageForDeliveryOrder(
           this.username,
           this.noWaAdmin,
           this.no_telp_user,
           this.formDeliveryOrder,
-          detailOrder
+          this.cartItems
         )
-      )
-    })
+      );
+    }
   }
 
 }

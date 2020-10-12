@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+import Rupiah from "../lib/currency_rupiah/rupiah";
+
 @Injectable({
   providedIn: 'root',
 })
@@ -48,34 +50,87 @@ export class JasttipsDataService {
     return text;
   }
 
-  public sendMessageForDeliveryOrder(username, noWaAdmin,no_telp_user, formDeliveryOrder, detailOrder) {
+  public sendMessageForDeliveryOrder(username, noWaAdmin,no_telp_user, formDeliveryOrder, allOrder) {
+
+    let CurrencyRupiah = new Rupiah(null);
 
     const enter = '%0A';
     const enter2x = '%0A%0A';
     const headerMsg = '*Pemesanan Item* ';
+    const fontBold = '*';
 
     const txtUsername = '*Nama :* ';
     const txtNoTelpUser = '*No Telepon :* ';
     const txtAddress = '*Alamat :* ';
     const txtAdditionalMessage = '*Pesan Tambahan :* ';
+
+    var MessageSend = '';
+    var ItemOrders = '';
+
+    var TotalOrder : number = 0 ;
+
+    allOrder.map(data => {
+      ItemOrders = ItemOrders+fontBold+data.name_outlet+fontBold+enter+
+      'No Telp : '+data.phone_outlet+enter+
+      'Nama Item : '+data.name_item+enter;
+
+      if(data.price_item_promo == 0 || !data.price_item_promo == null){
+        CurrencyRupiah = new Rupiah(Number(data.price_item));
+        CurrencyRupiah.setPrefix = "Rp.";
+        CurrencyRupiah.setSuffix = ",-";
+        
+        ItemOrders = ItemOrders+'Harga Normal :'+CurrencyRupiah.format+enter;
+      }else{
+        CurrencyRupiah = new Rupiah(Number(data.price_item_promo));
+        CurrencyRupiah.setPrefix = "Rp.";
+        CurrencyRupiah.setSuffix = ",-";
+
+        ItemOrders = ItemOrders+'Harga Promo :'+CurrencyRupiah.format+enter;
+      }
+
+      CurrencyRupiah = new Rupiah(Number(data.sub_total));
+      CurrencyRupiah.setPrefix = "Rp.";
+      CurrencyRupiah.setSuffix = ",-";
+
+      ItemOrders = ItemOrders+'Jumlah Item : '+data.qty+enter+
+      fontBold+'Sub Total : '+CurrencyRupiah.format+fontBold+enter2x;
+
+      
+
+      TotalOrder = TotalOrder+Number(data.sub_total);
+    })
+
+    CurrencyRupiah = new Rupiah(Number(TotalOrder));
+    CurrencyRupiah.setPrefix = "Rp.";
+    CurrencyRupiah.setSuffix = ",-";
     
-    return (
-      //  --- Send -----------------------------------------------------
-      environment.apiSendMessageWA + noWaAdmin + '&text=' +
-      // ---------------------------------------------------------------
+    ItemOrders = ItemOrders+fontBold+'TOTAL PEMESANAN : '+CurrencyRupiah.format+fontBold;
 
-      // --- Header ----------------------------------------------------
-      headerMsg + enter2x +
-      txtUsername + username + enter +
-      txtNoTelpUser + environment.apiSendMessageWA + no_telp_user + enter +
-      txtAddress + formDeliveryOrder.address_customer + enter +
-      txtAdditionalMessage + formDeliveryOrder.additional_message + enter2x +
-      // ---------------------------------------------------------------
+    console.log(JSON.stringify(ItemOrders));
 
-      // ---------------------------------------------------------------
-      detailOrder.name_item
-      // ---------------------------------------------------------------
-    )
+    MessageSend = 
+    //  --- Send -----------------------------------------------------
+    environment.apiSendMessageWA + noWaAdmin + '&text=' +
+    // ---------------------------------------------------------------
+
+    // --- Header ----------------------------------------------------
+    headerMsg + enter2x +
+    txtUsername + username + enter +
+    txtNoTelpUser + environment.apiSendMessageWA + no_telp_user + enter +
+    txtAddress + formDeliveryOrder.address_customer + enter;
+
+    if(formDeliveryOrder.additional_message == null || formDeliveryOrder.additional_message == ''){
+      MessageSend = MessageSend+txtAdditionalMessage +'-'+ enter2x;
+    }else{
+      MessageSend = MessageSend+txtAdditionalMessage + formDeliveryOrder.additional_message + enter2x;
+    }
+    // ---------------------------------------------------------------
+
+    // --- Order -----------------------------------------------------
+    MessageSend = MessageSend+ItemOrders;  
+    // ---------------------------------------------------------------
+    
+    return MessageSend;
   }
 
   public sendMessageForOrder(phone_admin: string, formOrder) {

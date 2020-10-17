@@ -13,7 +13,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/sign-up/sign-up.module").then(
         (m) => m.SignUpPageModule
-      ),canLoad: [CheckSignupService]
+      ), canLoad: [CheckSignupService]
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountPageModule)
   },
   {
     path: "dashboard",
@@ -23,9 +27,8 @@ const routes: Routes = [
       ),
   },
   {
-    path: "list-product/2",
-    loadChildren: () =>
-      import("./pages/order/order.module").then((m) => m.OrderPageModule),
+    path: 'promo-product/:promoItemId',
+    loadChildren: () => import('./pages/outlet-product/promo-product/promo-product.module').then(m => m.PromoProductPageModule)
   },
   {
     path: "list-product/:productId",
@@ -38,6 +41,25 @@ const routes: Routes = [
           ).then((m) => m.ListProductPageModule),
       },
       {
+        path: "information/:orderId",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import(
+                "./pages/information/information.module"
+              ).then((m) => m.InformationPageModule),
+          },
+          {
+            path: "order/:orderId",
+            loadChildren: () =>
+              import(
+                "./pages/order/order.module"
+              ).then((m) => m.OrderPageModule),
+          }
+        ]
+      },
+      {
         path: "detail-product/:detailProductId",
         loadChildren: () =>
           import(
@@ -47,33 +69,12 @@ const routes: Routes = [
     ],
   },
   {
-    path: "order",
-    loadChildren: () =>
-      import("./pages/order/order.module").then((m) => m.OrderPageModule),
-  },
-  {
     path: "delivery-order",
     loadChildren: () =>
       import(
         "./pages/outlet-product/delivery-order/delivery-order.module"
       ).then((m) => m.DeliveryOrderPageModule),
-  },
-  {
-    path: 'sign-up',
-    loadChildren: () => import('./pages/sign-up/sign-up.module').then( m => m.SignUpPageModule)
-  },
-  {
-    path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
-  },
-  {
-    path: 'promo-product/:promoItemId',
-    loadChildren: () => import('./pages/outlet-product/promo-product/promo-product.module').then( m => m.PromoProductPageModule)
-  },
-
-
-
-
+  }
 ];
 
 @NgModule({
@@ -82,4 +83,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -120,4 +120,15 @@ export class CartService {
     localStorage.setItem('outlet-' + this.itemCart.id_outlet, JSON.stringify(this.items));
   }
 
+  clearItem() {
+    this.cart = JSON.parse(localStorage.getItem("cart-items"));
+
+    this.cart.map(data => {
+      localStorage.removeItem("outlet-" + data.id_outlet);
+    });
+
+    localStorage.removeItem("cart-items");
+    localStorage.removeItem("cartItemCount");
+  }
+
 }

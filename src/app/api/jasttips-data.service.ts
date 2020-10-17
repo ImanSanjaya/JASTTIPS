@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -56,11 +55,11 @@ export class JasttipsDataService {
 
     const enter = '%0A';
     const enter2x = '%0A%0A';
-    const headerMsg = '*Pemesanan Item* ';
+    const headerMsg = '*JASTTIPS PESAN* ';
     const fontBold = '*';
 
     const txtUsername = '*Nama :* ';
-    const txtNoTelpUser = '*No Telepon :* ';
+    const txtNoTelpUser = '*No WhatsApp :* ';
     const txtAddress = '*Alamat :* ';
     const txtAdditionalMessage = '*Pesan Tambahan :* ';
 
@@ -71,7 +70,7 @@ export class JasttipsDataService {
 
     allOrder.map(data => {
       ItemOrders = ItemOrders+fontBold+data.name_outlet+fontBold+enter+
-      'No Telp : '+data.phone_outlet+enter+
+      'No Telp : ' + environment.apiSendMessageWA +data.phone_outlet+enter+
       'Nama Item : '+data.name_item+enter;
 
       if(data.price_item_promo == 0 || !data.price_item_promo == null){
@@ -133,26 +132,51 @@ export class JasttipsDataService {
     return MessageSend;
   }
 
-  public sendMessageForOrder(phone_admin: string, formOrder) {
+  public sendMessageForDeliverItems(phone_admin, username, NoWhatsApp, formDeliveryItems) {
+    let headerMsg = '*JASTTIPS ANTAR BARANG*';
+    let enter2x = '%0A%0A';
+    
+    let txtUsername = 'Nama : ';
+    let txtNoWhatsApp = 'Nomor WhatsApp : ';
+    let txtJenisBarang = 'Jenis Barang : ';
+    let txtAlamatAmbil = 'Alamat Ambil : ';
+    let txtNamaPenerima = 'Nama Penerima : ';
+    let txtNoWhatsAppPenerima = 'Nomor WhatsApp Penerima : ';
+    let txtAlamatPengirim = 'Alamat Pengiriman : ';
+
     return (
       environment.apiSendMessageWA +
       '/send?phone=' +
-      phone_admin +
-      '&text=' +
-      '*Nama%20:*%20' +
-      formOrder.name_customer +
-      '%0A%0A' +
-      '*Nomor*%20*Telepon*%20*:*%20' +
-      formOrder.phone_customer +
-      '%0A%0A' +
-      '*Alamat*%20*:*%20' +
-      formOrder.address_customer +
-      '%0A%0A' +
-      '*Menu*%20*/*%20*Barang*%20*:*%20' +
-      formOrder.product_customer +
-      '%0A%0A' +
-      '*Outlet*%20*:*%20' +
-      formOrder.outlet_customer
+      phone_admin + '&text=' +
+      headerMsg + enter2x +
+      txtUsername + username + enter2x +
+      txtNoWhatsApp + environment.apiSendMessageWA + NoWhatsApp + enter2x +
+      txtJenisBarang + formDeliveryItems.jenisBarang + enter2x +
+      txtAlamatAmbil + formDeliveryItems.alamatAmbil + enter2x + 
+      txtNamaPenerima + formDeliveryItems.namaPenerima + enter2x +
+      txtNoWhatsAppPenerima + environment.apiSendMessageWA + formDeliveryItems.noWaPenerima + enter2x +
+      txtAlamatPengirim + formDeliveryItems.alamatPengirim
     );
+  }
+
+  public sendMessageForManuallyOrder(phoneAdmin, username, noWhatsApp, nameCategory, formOrder) {
+    let headerMsg = '*JASTTIPS PESAN ' + nameCategory.toUpperCase() +'*';
+    let enter2x = '%0A%0A';
+    
+    let txtUsername = 'Nama : ';
+    let txtNoWhatsApp = 'Nomor WhatsApp : ';
+    let txtMenu = 'Menu : ';
+    let txtOutlet = 'Outlet : ';
+    
+    return (
+      environment.apiSendMessageWA +
+      '/send?phone=' +
+      phoneAdmin + '&text=' +
+      headerMsg + enter2x +
+      txtUsername + username + enter2x +
+      txtNoWhatsApp + environment.apiSendMessageWA + noWhatsApp + enter2x +
+      txtMenu + formOrder.menu + enter2x +
+      txtOutlet + formOrder.outlet
+    )
   }
 }

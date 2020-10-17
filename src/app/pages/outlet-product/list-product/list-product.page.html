@@ -49,8 +49,14 @@
     </ion-grid>
   </div>
 
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="clickInformation(productId)">
+      <ion-icon style="font-size: 30px;" name="reader"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/delivery-order']">
+    <ion-fab-button (click)="clickInformationToCart(productId)">
       <img src="assets/icon/basket.png" alt="">
       <ion-badge color="danger">
         {{ cartItemCount }}

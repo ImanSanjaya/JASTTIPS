@@ -45,7 +45,7 @@
           <ion-label class="ion-no-padding">Kategori</ion-label>
         </ion-col>
         <ion-col class="ion-no-padding" size="4" *ngFor="let category of categories">
-          <ion-card routerLink="/list-product/{{category.id_category_outlet}}" routerLinkActive="router-link-active">
+          <ion-card (click)="getProduct(category.id_category_outlet)" routerLinkActive="router-link-active">
             <ion-card-header class="ion-no-padding">
               <img [src]="category.img_path_category_outlet" alt="" class="img-category" />
             </ion-card-header>

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="category">Info {{ category.name_category_outlet }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="category">
+  <h1 class="ion-padding info-tentang">Informasi Tentang</h1>
+  <h2 class="ion-padding info-pengiriman">Pengiriman {{ category.name_category_outlet }}</h2>
+  <ng-container *ngIf="getStorageInfo === 'manually-category-'+category.id_category_outlet">
+    <p class="ion-padding info-paragraf">
+      Tarif Pemesanan {{ category.name_category_outlet }} Rp. 2.000,-/Kilometer.
+    </p>
+  </ng-container>
+  <ng-container *ngIf="getStorageInfo == 'ordering-items'">
+    <p class="ion-padding info-paragraf">
+      Tarif {{ category.name_category_outlet }} Rp. 3.000,-/Kilometer.
+    </p>
+  </ng-container>
+  <ion-button (click)="clickOrder(productId)" color="warning" routerLinkActive="router-link-active" expand="block"
+    class="ion-padding">
+    Paham
+  </ion-button>
+</ion-content>

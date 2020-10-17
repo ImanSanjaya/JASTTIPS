@@ -25,10 +25,20 @@ export class ListProductPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getData();
+  }
+
+  ionViewWillEnter() {
     this.getItemCount();
-    
     this.reloadItemCount();
   }
+
+  ionViewWillLeave() {
+    this.getData();
+
+    this.getItemCount();
+    this.reloadItemCount();
+  }
+
 
   ngOnDestroy() {
     clearInterval(this.interval);
@@ -119,6 +129,20 @@ export class ListProductPage implements OnInit, OnDestroy {
 
     this.router.navigateByUrl(
       "/list-product/" + this.productId + "/detail-product/" + product.id_outlet
+    );
+  }
+
+  clickInformation(productId) {
+    localStorage.setItem("info", "manually-category-" + productId);
+    this.router.navigateByUrl(
+      "/list-product/" + productId + "/information/" + productId
+    );
+  }
+
+  clickInformationToCart(productId) {
+    localStorage.setItem("info", "cart");
+    this.router.navigateByUrl(
+      "/list-product/" + productId + "/information/" + productId
     );
   }
 }

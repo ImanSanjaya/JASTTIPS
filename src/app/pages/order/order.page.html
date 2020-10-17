@@ -1,13 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
-      </ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="category">{{ category }}</ion-title>
-    <ion-title *ngIf="!category">
-      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
-    </ion-title>
+    <ion-title *ngIf="category">Pesan {{ category.name_category_outlet }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,45 +12,98 @@
     <ion-list class="ion-padding">
       <ion-item class="ion-no-padding">
         <ion-label position="floating">Nama</ion-label>
-        <ion-input [(ngModel)]="formOrder.name_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        <ion-input class="mt-user ion-text-capitalize" type="text" value="{{ username }}" disabled>
         </ion-input>
       </ion-item>
     </ion-list>
     <ion-list class="ion-padding">
       <ion-item class="ion-no-padding">
-        <ion-label position="floating">Nomor HP (prioritas WhatsApp)</ion-label>
-        <ion-input [(ngModel)]="formOrder.phone_customer" [ngModelOptions]="{standalone: true}" required type="text">
+        <ion-label position="floating">Nomor WhatsApp</ion-label>
+        <ion-input type="text" value="{{ no_telp_user }}" disabled>
         </ion-input>
       </ion-item>
     </ion-list>
-    <ion-list class="ion-padding">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating">Alamat</ion-label>
-        <ion-input [(ngModel)]="formOrder.address_customer" [ngModelOptions]="{standalone: true}" required type="text">
-        </ion-input>
-      </ion-item>
-    </ion-list>
-    <ion-list class="ion-padding">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating">Menu / Barang</ion-label>
-        <ion-input [(ngModel)]="formOrder.product_customer" [ngModelOptions]="{standalone: true}" required type="text">
-        </ion-input>
-      </ion-item>
-    </ion-list>
-    <ion-list class="ion-padding">
-      <ion-item class="ion-no-padding">
-        <ion-label position="floating">Outlet</ion-label>
-        <ion-input [(ngModel)]="formOrder.outlet_customer" [ngModelOptions]="{standalone: true}" required type="text">
-        </ion-input>
-      </ion-item>
-    </ion-list>
+
+    <div *ngIf="category">
+      <ng-container *ngIf="getStorageInfo === 'manually-category-'+category.id_category_outlet">
+        <ion-list class="ion-padding">
+          <ion-item class="ion-no-padding">
+            <ion-label position="floating">Menu</ion-label>
+            <ion-textarea [(ngModel)]="formOrderItems.menu" [ngModelOptions]="{standalone: true}"  type="text" >
+            </ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-list class="ion-padding">
+          <ion-item class="ion-no-padding">
+            <ion-label position="floating">Outlet</ion-label>
+            <ion-input [(ngModel)]="formOrderItems.outlet" [ngModelOptions]="{standalone: true}"  type="text" >
+            </ion-input>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="getStorageInfo === 'ordering-items'">
+      <ion-list class="ion-padding">
+        <ion-item class="ion-no-padding">
+          <ion-label position="floating">Jenis Barang</ion-label>
+          <ion-textarea [(ngModel)]="formDeliverItems.jenisBarang" [ngModelOptions]="{standalone: true}" 
+            type="text">
+          </ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-list class="ion-padding">
+        <ion-item class="ion-no-padding">
+          <ion-label position="floating">Alamat Ambil</ion-label>
+          <ion-textarea [(ngModel)]="formDeliverItems.alamatAmbil" [ngModelOptions]="{standalone: true}" 
+            type="text">
+          </ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-list class="ion-padding">
+        <ion-item class="ion-no-padding">
+          <ion-label position="floating">Nama Penerima</ion-label>
+          <ion-input class="mt-user ion-text-capitalize" [(ngModel)]="formDeliverItems.namaPenerima"
+            [ngModelOptions]="{standalone: true}"  type="text">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list class="ion-padding">
+        <ion-label color="primary" class="label-no-wa">No WhatsApp Penerima</ion-label>
+        <ion-item class="ion-no-padding">
+          <ion-label class="plus-62">+62</ion-label>
+          <ion-input [(ngModel)]="formDeliverItems.noWaPenerima" type="number" [ngModelOptions]="{standalone: true}"
+            placeholder="812 3456 xxxx" >
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list class="ion-padding">
+        <ion-item class="ion-no-padding">
+          <ion-label position="floating">Alamat Pengiriman</ion-label>
+          <ion-textarea [(ngModel)]="formDeliverItems.alamatPengirim" [ngModelOptions]="{standalone: true}" 
+            type="text">
+          </ion-textarea>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
   </form>
 </ion-content>
 
-<ion-footer>
-  <ion-list class="ion-padding">
-    <ion-button (click)="submitOrder()" expand="block" color="primary">
-      Order
-    </ion-button>
-  </ion-list>
-</ion-footer>
+<div *ngIf="category">
+  <ng-container *ngIf="getStorageInfo === 'manually-category-'+category.id_category_outlet">
+    <ion-footer>
+      <ion-button (click)="orderManual(category.name_category_outlet)" expand="block" class="ion-padding">
+        Pesan
+      </ion-button>
+    </ion-footer>
+  </ng-container>
+
+  <ng-container *ngIf="getStorageInfo === 'ordering-items'">
+    <ion-footer>
+      <ion-button (click)="orderItems()" expand="block" class="ion-padding">
+        Pesan
+      </ion-button>
+    </ion-footer>
+  </ng-container>
+</div>

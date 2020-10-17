@@ -30,13 +30,24 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getData();
-    
+  }
+
+  ionViewWillEnter() {
     this.getUsername();
     this.getNoTelpUser();
     
     this.getDataUser();
-
     this.getItemListPromo();
+  }
+
+  ionViewWillLeave() {
+    this.getData();
+
+    this.getUsername();
+    this.getNoTelpUser();
+    
+    this.getDataUser();
+    this.getItemListPromo(); 
   }
 
   ngOnDestroy() {
@@ -98,6 +109,17 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.getUsername();
       this.getNoTelpUser();
     }, 1000);
+  }
+
+  getProduct(categoryId) {
+    if (categoryId == '2') {
+      localStorage.setItem("info", "ordering-items");
+      this.router.navigateByUrl(
+        "/list-product/" + categoryId + "/information/" + categoryId
+      );
+    } else {
+      this.router.navigateByUrl("/list-product/" + categoryId);
+    }
   }
 
   getItemListPromo() {
